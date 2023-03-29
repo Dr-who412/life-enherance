@@ -38,6 +38,7 @@ class DashBord extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
+        const SizedBox(height: 6),
         Flexible(
           fit: FlexFit.loose,
 

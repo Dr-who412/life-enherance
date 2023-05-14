@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_partner/module/homeScreen/cubit/homeCubit.dart';
 import 'module/authScreen/login.dart';
+import 'package:life_partner/fitness_details/daily_workout.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +22,14 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-
           primarySwatch: Colors.blue,
         ),
-        home: Login(),
+      home: Login(),
+      /*  initialRoute: Login.routeName,
+        routes: {
+          Login.routeName: (_) => Login(),
+          DailyWorkout.routeName: (_) => DailyWorkout()
+        },*/
         debugShowCheckedModeBanner: false,
       ),
     );

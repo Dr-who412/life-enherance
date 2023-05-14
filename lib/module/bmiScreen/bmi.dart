@@ -209,7 +209,8 @@ class _BmiState extends State<Bmi> {
                 padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: HexColor('#0A1C1C'),
-                    borderRadius: BorderRadius.circular(12)
+                    borderRadius: BorderRadius.circular(12),
+
                   ),
                   child: Text("${(wight/pow(hight.round()/100,2)).round()} BMI",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 24),),
               ),

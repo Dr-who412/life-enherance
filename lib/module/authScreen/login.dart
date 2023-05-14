@@ -7,6 +7,7 @@ import '../../layout/homeLayout.dart';
 import '../bmiScreen/bmi.dart';
 
 class Login extends StatelessWidget {
+  static const String routeName= 'Login screen';
    Login({Key? key}) : super(key: key);
 var emailController= TextEditingController();
 var passwordController= TextEditingController();

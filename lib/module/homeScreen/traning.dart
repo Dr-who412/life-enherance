@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:life_partner/fitness_details/daily_workout.dart';
+import 'package:life_partner/fitness_details/abs_screen.dart';
+import 'package:life_partner/fitness_details/leg_screen.dart';
+import 'package:life_partner/fitness_details/chest_screen.dart';
+import 'package:life_partner/fitness_details/shoulder_screen.dart';
+import 'package:life_partner/fitness_details/arm_screen.dart';
+
+import '../../shared/componant/componant.dart';
+
 class Traning extends StatelessWidget {
   const Traning({Key? key}) : super(key: key);
 
@@ -49,30 +58,51 @@ class Traning extends StatelessWidget {
           ),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CategoryWidget('Daily Workout','assets/training_images/workout.jfif',  (){
+            //  Navigator.pushNamed(context, DailyWorkout.routeName);
+              NavigatPushTo(context: context, widget: DailyWorkout());
+            })
+          ],
+        ),
+        const SizedBox(height:10),
+        Row(
           children: [
 
             Expanded(
               child: Column(
                 children:[
-                  CategoryWidget('ABS', 'assets/training_images/abs.png'),
-                  SizedBox(height: 5),
-                  CategoryWidget('ARM', 'assets/training_images/arm.png' ),
+                  CategoryWidget('ABS', 'assets/training_images/abs.png', (){
+                    NavigatPushTo(context: context, widget: AbsScreen());
+                  }),
+                  const  SizedBox(height: 5),
+                  CategoryWidget('ARM', 'assets/training_images/arm.png' , (){
+                    NavigatPushTo(context: context, widget: ArmScreen());
+
+                  }),
                 ]
               ),
             ),
-            SizedBox(width:8),
-            Expanded(child: CategoryWidget('CHEST', 'assets/training_images/chest.png'))
+            const  SizedBox(width:8),
+            Expanded(child: CategoryWidget('CHEST', 'assets/training_images/chest.png', (){
+              NavigatPushTo(context: context, widget: ChestScreen());
+            }))
           ]
         ),
-        SizedBox(height:10),
+        const SizedBox(height:10),
         Row(
           children: [
-            Expanded(child: CategoryWidget('LEG','assets/training_images/leg.png' )),
-            SizedBox(width: 8),
-            Expanded(child: CategoryWidget('SHOULDER', 'assets/training_images/shoulder.png')),
+            Expanded(child: CategoryWidget('LEG','assets/training_images/leg.png', (){
+              NavigatPushTo(context: context, widget: LegsScreen());
+            } )),
+            const  SizedBox(width: 8),
+            Expanded(child: CategoryWidget('SHOULDER', 'assets/training_images/shoulder.png', (){
+              NavigatPushTo(context: context, widget: ShoulderScreen());
+            })),
           ],
         ),
-        SizedBox(height:10),
+        const  SizedBox(height:10),
       ],
     );
   }
@@ -97,23 +127,27 @@ class MeasuringWidget extends StatelessWidget {
 class CategoryWidget extends StatelessWidget {
   String categoryName;
   String imagePath;
-  CategoryWidget(this.categoryName, this.imagePath);
+  var onTap;
+  CategoryWidget(this.categoryName, this.imagePath, this.onTap);
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
-      child: Stack(
-        children: [
-          Image.asset(imagePath),
-          Positioned(
-              top: 10,
-              left: 10,
-              child: Text(categoryName,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize:14,
-                      fontWeight: FontWeight.bold))),
-        ]
+    return InkWell(
+      onTap:  onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Stack(
+          children: [
+            Image.asset(imagePath),
+            Positioned(
+                top: 10,
+                left: 10,
+                child: Text(categoryName,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize:14,
+                        fontWeight: FontWeight.bold))),
+          ]
+        ),
       ),
     );
   }

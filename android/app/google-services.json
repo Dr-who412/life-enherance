@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1042200251962",
+    "project_id": "lifeenhancer",
+    "storage_bucket": "lifeenhancer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042200251962:android:3602fc270bb26b1ddbef03",
+        "android_client_info": {
+          "package_name": "com.example.life_partner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1042200251962-ctfk10mt1m7p6941ajp9oldu2jehabgi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqrH8SfkfwyOotVrYtywO_XFevJGFklds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1042200251962-ctfk10mt1m7p6941ajp9oldu2jehabgi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

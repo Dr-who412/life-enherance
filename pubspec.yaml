@@ -34,6 +34,7 @@ dependencies:
   hexcolor:
   bloc:
   flutter_bloc:
+
   fluttertoast: ^8.0.9
   conditional_builder_null_safety: ^0.0.6
   shared_preferences: ^2.0.15
@@ -41,6 +42,10 @@ dependencies:
   cloud_firestore:
   firebase_storage:
   cached_network_image: ^3.2.3
+
+
+  video_player: ^2.4.2
+  youtube_player_flutter: ^8.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -81,7 +86,7 @@ flutter:
     - assets/todo/
     - assets/homeIcon/
     - assets/training_images/
-
+    - assets/videos/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

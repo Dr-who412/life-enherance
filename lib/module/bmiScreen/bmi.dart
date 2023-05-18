@@ -302,13 +302,22 @@ class _BmiState extends State<Bmi> {
                       fontWeight: FontWeight.bold,
                       fontSize: 24),
                 ),
+// =======
+//                     borderRadius: BorderRadius.circular(12),
+//
+//                   ),
+//                   child: Text("${(wight/pow(hight.round()/100,2)).round()} BMI",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 24),),
+// >>>>>>> be4c9d56b50b95f0ef07e1770466e50afd77fb0f
               ),
               BlocListener<SignCubit, SignState>(
                 listener: (context, state) {
                   // TODO: implement listener}
                   if (state is UpdateUSerSuccessState) {
-                    Navigator.pushAndRemoveUntil(context,
-                        MaterialPageRoute(builder: (_)=>HomeLayout()),(route) => false,);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => HomeLayout()),
+                      (route) => false,
+                    );
                   }
                 },
                 child: FloatingActionButton(
@@ -318,7 +327,8 @@ class _BmiState extends State<Bmi> {
                     SignCubit.get(context).updateDate(
                         BMI: (wight / pow(hight.round() / 100, 2)).round(),
                         height: hight.round(),
-                        weight: wight.round(),isMale:isMale?true:false );
+                        weight: wight.round(),
+                        isMale: isMale ? true : false);
                   },
                   elevation: 6,
                   backgroundColor: Colors.white,

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:life_partner/shared/style/colors.dart';
 
+import '../../../model/auth_model/doctors.dart';
 import '../../../shared/componant/componant.dart';
 
 class DoctorProfile extends StatelessWidget {
-  const DoctorProfile({Key? key}) : super(key: key);
+  final DoctorModel? item;
+   DoctorProfile({Key? key,required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       top: true,
       right: true,
@@ -49,7 +50,7 @@ class DoctorProfile extends StatelessWidget {
                                   fontSize: 22,
                                 ),),
                               Expanded(
-                                child: Text("shen power of sheld ",
+                                child: Text("${item?.name}",
                                   style: TextStyle(color: DARK.withOpacity(.4),fontWeight: FontWeight.bold,
                                   ),),
                               )
@@ -125,7 +126,7 @@ class DoctorProfile extends StatelessWidget {
                         children: [
                           Image.asset('assets/homeIcon/money.png',color: DARKINDED,),
                           SizedBox(width: 8,),
-                          Text("717",
+                          Text("${item?.fee}",
                             style: TextStyle(color: DARK.withOpacity(.4),fontWeight: FontWeight.bold,
                             ),),
                         ],
@@ -136,7 +137,7 @@ class DoctorProfile extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.not_listed_location,color: DARKINDED,),
-                          Text("tanta alb7r Streeet",
+                          Text("${item?.address}",
                             style: TextStyle(color: DARK.withOpacity(.4),fontWeight: FontWeight.bold,
                             ),),
                         ],
@@ -148,7 +149,7 @@ class DoctorProfile extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.phone_android,color: DARKINDED,),
-                          Text("+201554413005",
+                          Text("${item?.phone}",
                             style: TextStyle(color: DARK.withOpacity(.4),
                               fontWeight: FontWeight.bold,
 

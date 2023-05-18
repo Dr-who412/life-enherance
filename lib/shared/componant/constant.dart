@@ -1,0 +1,4 @@
+class AppConstant{
+  static String Token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWIwNjQ0ODQ4OGYxNTcxNmU3YzgzOSIsImVtYWlsIjoibW9tZW5AbW9tZW4uY29tIiwiaWF0IjoxNjgyMTIzOTc3LCJleHAiOjE2ODI5ODc5Nzd9.OXd6vACjmF0Q9zZkNgrehX_HqvPpYN3iCAku98khtvo";
+
+}

@@ -1,8 +1,39 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:life_partner/module/authScreen/login.dart';
+import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
+import '../../model/auth_model/doctors.dart';
 import '../../module/homeScreen/doctorScreen/doctorProfile.dart';
 import '../style/colors.dart';
+
+
+enum toastStates { ERROR, WARRING, SUCESS }
+
+Color? toastColor({toastStates? state}) {
+  Color? color;
+  switch (state) {
+    case toastStates.ERROR:
+      color = Color.fromRGBO(245, 3, 3, 0.6470588235294118).withOpacity(.4);
+      break;
+    case toastStates.SUCESS:
+      color = Colors.teal.withOpacity(.4);
+      break;
+    case toastStates.WARRING:
+      color = Color.fromRGBO(245, 196, 1, 0.6980392156862745).withOpacity(.4);
+      break;
+  }
+  return color;
+}
+void showtoast({required String text, required toastStates state}) =>
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_LONG,
+         gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: toastColor(state: state),
+        textColor: Colors.white,
+        fontSize: 16.0);
 
 void navigatfinished(context, Widget widget) {
   Navigator.pushAndRemoveUntil(
@@ -75,7 +106,7 @@ Widget DashSection(
         ],
       ),
     );
-Widget MyAppBar() => Row(
+Widget MyAppBar(BuildContext context) => Row(
       children: [
         Container(
             margin: EdgeInsets.all(8),
@@ -84,17 +115,43 @@ Widget MyAppBar() => Row(
               borderRadius: BorderRadius.circular(12),
             ),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                SignCubit.get(context).logOut();
+              },
               icon: Icon(
                 Icons.menu,
                 color: Colors.white,
               ),
             )),
         Spacer(),
-        CircleAvatar(
-          radius: 22,
-          backgroundImage: AssetImage('assets/img.png'),
-        ),
+        (SignCubit.get(context).user?.image??'').isNotEmpty?CachedNetworkImage(
+          imageUrl: "${SignCubit.get(context).user?.image}",
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                  colorFilter:
+                  ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+            ),
+          ),
+          placeholder: (context, url) =>  CircleAvatar(
+radius: 22,
+backgroundImage:AssetImage('assets/img.png'),
+),
+ //          errorWidget: (context, url, error) => CircleAvatar(
+ //   radius: 22,
+ //   backgroundImage:AssetImage('assets/img.png'),
+ // ),
+        ):CircleAvatar(
+radius: 22,
+backgroundImage:AssetImage('assets/img.png'),
+),
+        // CircleAvatar(
+        //   radius: 22,
+        //   backgroundImage:AssetImage('assets/img.png'),
+        // ),
       ],
     );
 Widget todoTask(
@@ -182,7 +239,7 @@ Widget CastumCard({
         child: child,
       ),
     );
-Widget DoctorCard({required BuildContext context}) => CastumCard(
+Widget DoctorCard({required BuildContext context,required DoctorModel? item}) => CastumCard(
     color: WHITE.withOpacity(.4),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,16 +257,16 @@ Widget DoctorCard({required BuildContext context}) => CastumCard(
             Text(
               "Dr.",
               style: TextStyle(
-                color: DARK.withOpacity(.4),
+                color: DARK.withOpacity(.8),
                 fontWeight: FontWeight.bold,
                 fontSize: 22,
               ),
             ),
             Expanded(
               child: Text(
-                "shen power of sheld ",
+                '${item?.name}',
                 style: TextStyle(
-                  color: DARK.withOpacity(.4),
+                  color: DARK.withOpacity(.6),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -231,7 +288,7 @@ Widget DoctorCard({required BuildContext context}) => CastumCard(
             ),
             Expanded(
               child: Text(
-                "shen power of sheld ",
+                "${item?.rate}",
                 style: TextStyle(
                   color: DARK.withOpacity(.4),
                   fontWeight: FontWeight.bold,
@@ -259,7 +316,7 @@ Widget DoctorCard({required BuildContext context}) => CastumCard(
             ),
             Expanded(
               child: Text(
-                "shen power of sheld ",
+                "${item?.address}",
                 style: TextStyle(
                   color: DARK.withOpacity(.4),
                   fontWeight: FontWeight.bold,
@@ -284,7 +341,7 @@ Widget DoctorCard({required BuildContext context}) => CastumCard(
             ),
             Expanded(
               child: Text(
-                "300",
+                "${item?.fee}",
                 style: TextStyle(
                   color: DARK.withOpacity(.4),
                   fontWeight: FontWeight.bold,
@@ -298,7 +355,7 @@ Widget DoctorCard({required BuildContext context}) => CastumCard(
                   borderRadius: BorderRadius.circular(22)),
               child: InkWell(
                 onTap: () {
-                  NavigatPushTo(context: context, widget: DoctorProfile());
+                  NavigatPushTo(context: context, widget: DoctorProfile(item:item));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

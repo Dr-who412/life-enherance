@@ -113,113 +113,116 @@ class DashBord extends StatelessWidget {
             ),
           ),
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CastumCard(
-              color: DARK,
-              child: Column(
-                children: [
-                  Image.asset("assets/dash/coffee.png"),
-                  Text(
-                    "BreakFast",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "234 col,\n no carbs",
-                    style: TextStyle(
-                      color: Colors.white,
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CastumCard(
+                color: DARK,
+                child: Column(
+                  children: [
+                    Image.asset("assets/dash/coffee.png"),
+                    Text(
+                      "BreakFast",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  TextButton(
-                      onPressed: () {},
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add,
-                            color: Colors.white,
-                          ),
-                          Text(
-                            "Add BreakFast",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ))
-                ],
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CastumCard(
-                  color: DARK,
-                  child: Column(
-                    children: [
-                      //Icon(Icons.add,color: Colors.white,),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Image.asset("assets/dash/sunny.png"),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "Lunch",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                    Text(
+                      "234 col,\n no carbs",
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      Text(
-                        "234 col,\n no carbs",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    TextButton(
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.add,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              "Add BreakFast",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ))
+                  ],
                 ),
-
-                CastumCard(
-                  child: Column(
-                    children: [
-                      //Icon(Icons.add,color: Colors.white,),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CastumCard(
+                      color: DARK,
+                      child: Column(
                         children: [
-                          Image.asset("assets/dash/moon.png"),
-                          SizedBox(
-                            width: 4,
+                          //Icon(Icons.add,color: Colors.white,),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Image.asset("assets/dash/sunny.png"),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Text(
+                                "Lunch",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                           Text(
-                            "Dinner",
+                            "234 col,\n no carbs",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                              color: Colors.white,
+                            ),
                           ),
                         ],
                       ),
-                      Text(
-                        "234 col,\n no carbs",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  color: DARK),
+                    ),
 
-              ],
-            ),
-          ],
+                    CastumCard(
+                      child: Column(
+                        children: [
+                          //Icon(Icons.add,color: Colors.white,),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Image.asset("assets/dash/moon.png"),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Text(
+                                "Dinner",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            "234 col,\n no carbs",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      color: DARK),
+
+                  ],
+                ),
+              ),
+            ],
+          ),
         )
       ],
     );

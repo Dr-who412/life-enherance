@@ -124,13 +124,19 @@ class SignUp extends StatelessWidget {
                   },
                   hint: 'confirm password',
                 ),
-                SizedBox(height: 12,),
+                SizedBox(
+                  height: 12,
+                ),
                 BlocConsumer<SignCubit, SignState>(
                   listener: (context, state) {
                     // TODO: implement listener
-                    if(state is SignInSuccessState){
+                    if (state is SignInWithGooglFirstTime) {
                       Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (_)=>AddUserImage()));
+                          MaterialPageRoute(builder: (_) => AddUserImage()));
+                    }
+                    if (state is SignInWithGooglOld) {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => HomeLayout()));
                     }
                   },
                   builder: (context, state) {
@@ -139,11 +145,12 @@ class SignUp extends StatelessWidget {
                       builder: (BuildContext context) {
                         return InkWell(
                           onTap: () {
-                            if(formKay.currentState!.validate()){
-                              SignCubit.get(context).singUp(email: emailController.text,
-                                  name: nameController.text, password: passwordController.text);
+                            if (formKay.currentState!.validate()) {
+                              SignCubit.get(context).singUp(
+                                  email: emailController.text,
+                                  name: nameController.text,
+                                  password: passwordController.text);
                             }
-
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -163,13 +170,16 @@ class SignUp extends StatelessWidget {
                           ),
                         );
                       },
-                      fallback: (BuildContext context) =>
-                          Center(child: CircularProgressIndicator(color: Colors.teal,)),
+                      fallback: (BuildContext context) => Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.teal,
+                      )),
                     );
                   },
                 ),
-                SizedBox(height: 12,),
-
+                SizedBox(
+                  height: 12,
+                ),
                 Text(
                   "OR",
                   style: TextStyle(

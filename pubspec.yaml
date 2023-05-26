@@ -34,7 +34,6 @@ dependencies:
   hexcolor:
   bloc:
   flutter_bloc:
-
   fluttertoast: ^8.0.9
   conditional_builder_null_safety: ^0.0.6
   shared_preferences: ^2.0.15
@@ -42,8 +41,7 @@ dependencies:
   cloud_firestore:
   firebase_storage:
   cached_network_image: ^3.2.3
-
-
+  flutter_staggered_grid_view:
   video_player: ^2.4.2
   youtube_player_flutter: ^8.1.0
 

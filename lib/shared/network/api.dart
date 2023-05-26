@@ -8,4 +8,5 @@ class AppApi {
   static String DeleteUser = 'user/delete';
   static String GetAllDoctor = 'doctor/alldoctors';
   static String GetDocProfile = 'doctor/doctorsid';
+  static String exerciseLevel = 'exercise/exerciseLevel';
 }

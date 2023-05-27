@@ -102,6 +102,14 @@ class Tranning2 extends StatelessWidget {
                   childrenDelegate: SliverChildBuilderDelegate(
                     (context, index) => CategoryWidget2(
                       item: HomeCubit.get(context).exrModel?.exercise[index],
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => ExrScreen(
+                                    item: HomeCubit.get(context)
+                                        .exrModel
+                                        ?.exercise[index],
+                                  ))),
                     ),
                   ),
                 ),
@@ -142,18 +150,14 @@ class CategoryWidget2 extends StatelessWidget {
   // String categoryName;
   // String imagePath;
   Exercise? item;
-  var onTap;
-  CategoryWidget2({required this.item, this.onTap});
+  Function onTap;
+  CategoryWidget2({required this.item, required this.onTap});
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => ExrScreen(
-                      item: item,
-                    )));
+        print("zzzzzzzzzzzzzz");
+        onTap();
       },
       child: Card(
         clipBehavior: Clip.hardEdge,
@@ -178,8 +182,10 @@ class CategoryWidget2 extends StatelessWidget {
                 width: double.infinity,
                 height: double.infinity,
                 color: Colors.white54,
-                child: CircularProgressIndicator(
-                  color: Colors.white54.withOpacity(.4),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.white54.withOpacity(.4),
+                  ),
                 )),
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),

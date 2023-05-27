@@ -85,19 +85,36 @@ class Login extends StatelessWidget {
                   },
                   hint: 'your account @gmail.com',
                 ),
-                TextFaildCustom(
-                    controller: passwordController,
-                    type: TextInputType.text,
-                    prefix: Icons.lock,
-                    suffix: Icons.visibility,
-                    isPassword: true,
-                    validate: (value) {
-                      if (value.isEmpty) {
-                        return "Password is short";
-                      }
-                      return null;
-                    },
-                    hint: 'password'),
+                BlocConsumer<SignCubit, SignState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  buildWhen: (pre, state) {
+                    if (state is ChangeVisableState) return true;
+                    return false;
+                  },
+                  builder: (context, state) {
+                    return TextFaildCustom(
+                        controller: passwordController,
+                        type: TextInputType.text,
+                        prefix: Icons.lock,
+                        suffix: SignCubit.get(context).isVisable
+                            ? Icons.visibility_off_outlined
+                            :Icons.visibility,
+                        suffixfun: () {
+                          SignCubit.get(context).changePasswordVisability();
+                        },
+                        isPassword:
+                            SignCubit.get(context).isVisable ? false : true,
+                        validate: (value) {
+                          if (value.isEmpty) {
+                            return "Password is short";
+                          }
+                          return null;
+                        },
+                        hint: 'password');
+                  },
+                ),
                 SizedBox(
                   height: 12,
                 ),

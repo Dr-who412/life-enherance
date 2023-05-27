@@ -2,6 +2,8 @@ abstract class SignState {}
 
 class InitSignState extends SignState {}
 
+class ChangeVisableState extends SignState {}
+
 class SigningGoogleState extends SignState {}
 
 class SignInLoadingState extends SignState {}

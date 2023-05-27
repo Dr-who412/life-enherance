@@ -99,30 +99,62 @@ class SignUp extends StatelessWidget {
                   },
                   hint: 'your account @gmail.com',
                 ),
-                TextFaildCustom(
-                    controller: passwordController,
-                    type: TextInputType.text,
-                    prefix: Icons.lock,
-                    suffix: Icons.visibility,
-                    isPassword: true,
-                    validate: (value) {
-                      if (value.isEmpty) {
-                        return "Password is short";
-                      }
-                      return null;
-                    },
-                    hint: 'password'),
-                TextFaildCustom(
-                  controller: confirmpasswordController,
-                  type: TextInputType.text,
-                  isPassword: true,
-                  validate: (value) {
-                    if (value.isEmpty) {
-                      return "Password is short";
-                    }
-                    return null;
+                BlocConsumer<SignCubit, SignState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
                   },
-                  hint: 'confirm password',
+                  buildWhen: (pre, state) {
+                    if (state is ChangeVisableState) return true;
+                    return false;
+                  },
+                  builder: (context, state) {
+                    return TextFaildCustom(
+                        controller: passwordController,
+                        type: TextInputType.text,
+                        prefix: Icons.lock,
+                        suffix: SignCubit.get(context).isVisable
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility,
+                        suffixfun: () {
+                          SignCubit.get(context).changePasswordVisability();
+                        },
+                        isPassword:
+                            SignCubit.get(context).isVisable ? false : true,
+                        validate: (value) {
+                          if (value.isEmpty) {
+                            return "Password is short";
+                          }
+                          return null;
+                        },
+                        hint: 'password');
+                  },
+                ),
+                BlocConsumer<SignCubit, SignState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  buildWhen: (pre, state) {
+                    if (state is ChangeVisableState) return true;
+                    return false;
+                  },
+                  builder: (context, state) {
+                    return TextFaildCustom(
+                      controller: confirmpasswordController,
+                      type: TextInputType.text,
+                      isPassword:
+                          SignCubit.get(context).isVisable ? false : true,
+                      validate: (value) {
+                        if (value.isEmpty) {
+                          return "Password is short";
+                        }
+                        if (value != passwordController.text) {
+                          return "confirm Password is different";
+                        }
+                        return null;
+                      },
+                      hint: 'confirm password',
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 12,
@@ -137,6 +169,10 @@ class SignUp extends StatelessWidget {
                     if (state is SignInWithGooglOld) {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (_) => HomeLayout()));
+                    }
+                    if (state is SignInSuccessState) {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (_) => AddUserImage()));
                     }
                   },
                   builder: (context, state) {

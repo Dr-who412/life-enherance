@@ -21,3 +21,11 @@ class GetEXRLoading extends HomeState {}
 class GetEXRSuccess extends HomeState {}
 
 class GetEXRError extends HomeState {}
+
+class ChangeVedioId extends HomeState {}
+
+class loadingTodoState extends HomeState {}
+
+class getTodoSuccesState extends HomeState {}
+
+class getTodoErrorState extends HomeState {}

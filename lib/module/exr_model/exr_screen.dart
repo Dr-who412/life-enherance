@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_partner/cardsScrol/data.dart';
 import 'package:life_partner/cardsScrol/src/widgets/cool_swiper.dart';
 import 'package:life_partner/cardsScrol/widgets/card_content.dart';
 import 'package:life_partner/model/exr_model.dart';
+import 'package:life_partner/module/homeScreen/cubit/homeCubit.dart';
+import 'package:life_partner/module/homeScreen/cubit/state.dart';
 import 'package:life_partner/shared/componant/componant.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import '../../shared/style/colors.dart';
 
 class ExrScreen extends StatefulWidget {
   Exercise? item;
@@ -30,10 +35,11 @@ class _ExrScreenState extends State<ExrScreen> {
 
   bool _isPlayerReady = false;
   late YoutubePlayerController _controller;
+  String? videoId;
+
   @override
   void initState() {
     // TODO: implement initState
-    String? videoId;
     videoId = YoutubePlayer.convertUrlToId("${widget.item?.uRL}");
     print(videoId);
     print(widget.item?.sId); // BBAyRBTfsOU
@@ -85,12 +91,24 @@ class _ExrScreenState extends State<ExrScreen> {
               children: [
                 Container(
                   alignment: Alignment.center,
-                  child: YoutubePlayer(
-                    controller: _controller,
-                    showVideoProgressIndicator: true,
-                    width: double.infinity,
-                    progressIndicatorColor: Colors.white54.withOpacity(.4),
-                    onReady: () => _controller.addListener(listener),
+                  child: Card(
+                    clipBehavior: Clip.hardEdge,
+                    color: WHITE.withOpacity(.4),
+                    elevation: 16,
+                    shadowColor: DARKINDED,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: YoutubePlayer(
+                        controller: _controller,
+                        showVideoProgressIndicator: true,
+                        width: double.infinity,
+                        progressIndicatorColor: Colors.white54.withOpacity(.4),
+                        onReady: () => _controller.addListener(listener),
+                      ),
+                    ),
                   ),
                 ),
                 Container(
@@ -100,7 +118,23 @@ class _ExrScreenState extends State<ExrScreen> {
                   child: CoolSwiper(
                     children: List.generate(
                       Data.colors.length,
-                      (index) => CardContent(color: Data.colors[index]),
+                      (index) => BlocListener<HomeCubit, HomeState>(
+                        listener: (context, state) {
+                          // TODO: implement listener}
+                          if (State is ChangeVedioId) {
+                            setState(() {
+                              print('fffff');
+                              videoId = YoutubePlayer.convertUrlToId(
+                                  "${HomeCubit.get(context).exrModel?.exercise[index].uRL}");
+                            });
+                          }
+                        },
+                        child: CardContent(
+                          color: Data.colors[index],
+                          index: index,
+                          onTap: () {},
+                        ),
+                      ),
                     ),
                   ),
                 ),

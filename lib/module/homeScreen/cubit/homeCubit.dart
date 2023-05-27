@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_partner/model/exr_model.dart';
+import 'package:life_partner/model/todo_tasks_model.dart';
 import 'package:life_partner/module/homeScreen/cubit/state.dart';
-import 'package:life_partner/module/homeScreen/traningsc.dart';
+import 'package:life_partner/module/homeScreen/traning.dart';
 import 'package:life_partner/shared/componant/componant.dart';
 import 'package:life_partner/shared/componant/constant.dart';
 import 'package:life_partner/shared/network/httpHelper.dart';
@@ -20,7 +21,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<Widget> Screens = [
     DashBord(),
     ToDo(),
-    Tranning2(),
+    Traning(),
     Doctor(),
   ];
   void ChangeNavBarScreen({required index}) {
@@ -29,10 +30,13 @@ class HomeCubit extends Cubit<HomeState> {
     if (index == 3) {
       getAllDoctor();
     }
-    if (index == 2) {
-      print("gettt exr");
-      getExerciseLevel();
+    if (index == 1) {
+      getTodoTAsks();
     }
+    // if (index == 2) {
+    //   print("gettt exr");
+    //   getExerciseLevel();
+    // }
   }
 
   ///get Doctor
@@ -90,6 +94,30 @@ class HomeCubit extends Cubit<HomeState> {
     }).catchError((error) {
       print('error::$error');
       emit(GetEXRError());
+    });
+  }
+
+  changeVedioId() {
+    emit(ChangeVedioId());
+  }
+
+  ///todo to do task
+  todoTaskModel? todo;
+  getTodoTAsks() async {
+    emit(loadingTodoState());
+    await postData(pathUrl: AppApi.daily_task, token: AppConstant.Token, body: {
+      'level': '2',
+    }).then((value) {
+      if (value['status']) {
+        todo = todoTaskModel.fromJson(value);
+        emit(getTodoSuccesState());
+      } else {
+        showtoast(text: 'load daily tasks faild', state: toastStates.WARRING);
+        emit(getTodoErrorState());
+      }
+    }).catchError((errer) {
+      showtoast(text: 'faild :$errer', state: toastStates.ERROR);
+      emit(getTodoErrorState());
     });
   }
 }

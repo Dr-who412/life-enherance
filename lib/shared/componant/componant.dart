@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:life_partner/module/authScreen/login.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
+
 import '../../model/auth_model/doctors.dart';
 import '../../module/homeScreen/doctorScreen/doctorProfile.dart';
 import '../style/colors.dart';
-
 
 enum toastStates { ERROR, WARRING, SUCESS }
 
@@ -25,11 +24,12 @@ Color? toastColor({toastStates? state}) {
   }
   return color;
 }
+
 void showtoast({required String text, required toastStates state}) =>
     Fluttertoast.showToast(
         msg: text,
         toastLength: Toast.LENGTH_LONG,
-         gravity: ToastGravity.BOTTOM,
+        gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: toastColor(state: state),
         textColor: Colors.white,
@@ -124,41 +124,41 @@ Widget MyAppBar(BuildContext context) => Row(
               ),
             )),
         Spacer(),
-        (SignCubit.get(context).user?.image??'').isNotEmpty?CachedNetworkImage(
-          imageUrl: "${SignCubit.get(context).user?.image}",
-          imageBuilder: (context, imageProvider) => Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                  colorFilter:
-                  ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
-            ),
-          ),
-          placeholder: (context, url) =>  CircleAvatar(
-radius: 22,
-backgroundImage:AssetImage('assets/img.png'),
-),
- //          errorWidget: (context, url, error) => CircleAvatar(
- //   radius: 22,
- //   backgroundImage:AssetImage('assets/img.png'),
- // ),
-        ):CircleAvatar(
-radius: 22,
-backgroundImage:AssetImage('assets/img.png'),
-),
+        (SignCubit.get(context).user?.image ?? '').isNotEmpty
+            ? CachedNetworkImage(
+                imageUrl: "${SignCubit.get(context).user?.image}",
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                        colorFilter:
+                            ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+                  ),
+                ),
+                placeholder: (context, url) => CircleAvatar(
+                  radius: 22,
+                  backgroundImage: AssetImage('assets/img.png'),
+                ),
+                //          errorWidget: (context, url, error) => CircleAvatar(
+                //   radius: 22,
+                //   backgroundImage:AssetImage('assets/img.png'),
+                // ),
+              )
+            : CircleAvatar(
+                radius: 22,
+                backgroundImage: AssetImage('assets/img.png'),
+              ),
         // CircleAvatar(
         //   radius: 22,
         //   backgroundImage:AssetImage('assets/img.png'),
         // ),
       ],
     );
-Widget todoTask(
-//{
-        //required task,
-//}
-        ) =>
+Widget todoTask({
+  required String task,
+}) =>
     Container(
       margin: EdgeInsets.symmetric(vertical: 6),
       padding: EdgeInsets.all(14),
@@ -170,14 +170,14 @@ Widget todoTask(
         children: [
           Spacer(),
           Text(
-            "task Title",
+            "$task",
             style: TextStyle(color: DARK, fontWeight: FontWeight.bold),
           ),
           Spacer(),
-          Text(
-            "02:12",
-            style: TextStyle(color: DARK, fontWeight: FontWeight.bold),
-          )
+          // Text(
+          //   "02:12",
+          //   style: TextStyle(color: DARK, fontWeight: FontWeight.bold),
+          // )
         ],
       ),
     );
@@ -217,7 +217,12 @@ Widget TextFaildCustom({
           prefix,
           color: DARK,
         ),
-        suffixIcon: IconButton(onPressed: suffixfun, icon: Icon(suffix)),
+        suffixIcon: IconButton(
+            onPressed: suffixfun,
+            icon: Icon(
+              suffix,
+              color: DARK,
+            )),
       ),
     );
 Widget CastumCard({
@@ -239,147 +244,151 @@ Widget CastumCard({
         child: child,
       ),
     );
-Widget DoctorCard({required BuildContext context,required DoctorModel? item}) => CastumCard(
-    color: WHITE.withOpacity(.4),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 12,
-            ),
-            CircleAvatar(backgroundImage: AssetImage("assets/img.png")),
-            SizedBox(
-              width: 12,
-            ),
-            Text(
-              "Dr.",
-              style: TextStyle(
-                color: DARK.withOpacity(.8),
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-              ),
-            ),
-            Expanded(
-              child: Text(
-                '${item?.name}',
-                style: TextStyle(
-                  color: DARK.withOpacity(.6),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 8,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 12,
-            ),
-            Image.asset('assets/homeIcon/stethoscope.png'),
-            SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: Text(
-                "${item?.rate}",
-                style: TextStyle(
-                  color: DARK.withOpacity(.4),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 8,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 12,
-            ),
-            Icon(
-              Icons.add_location,
-              color: DARKINDED,
-            ),
-            SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: Text(
-                "${item?.address}",
-                style: TextStyle(
-                  color: DARK.withOpacity(.4),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 8,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+Widget DoctorCard(
+        {required BuildContext context, required DoctorModel? item}) =>
+    CastumCard(
+        color: WHITE.withOpacity(.4),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 12,
-            ),
-            Image.asset("assets/homeIcon/money.png"),
-            SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: Text(
-                "${item?.fee}",
-                style: TextStyle(
-                  color: DARK.withOpacity(.4),
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 12,
                 ),
-              ),
-            ),
-            Card(
-              elevation: .6,
-              color: WHITE.withOpacity(.4),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22)),
-              child: InkWell(
-                onTap: () {
-                  NavigatPushTo(context: context, widget: DoctorProfile(item:item));
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Text(
-                        "More ",
-                        style: TextStyle(
-                            color: Colors.white60, fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.white60,
-                      ),
-                    ],
+                CircleAvatar(backgroundImage: AssetImage("assets/img.png")),
+                SizedBox(
+                  width: 12,
+                ),
+                Text(
+                  "Dr.",
+                  style: TextStyle(
+                    color: DARK.withOpacity(.8),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
                   ),
                 ),
-              ),
+                Expanded(
+                  child: Text(
+                    '${item?.name}',
+                    style: TextStyle(
+                      color: DARK.withOpacity(.6),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 12,
+                ),
+                Image.asset('assets/homeIcon/stethoscope.png'),
+                SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: Text(
+                    "${item?.rate}",
+                    style: TextStyle(
+                      color: DARK.withOpacity(.4),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 12,
+                ),
+                Icon(
+                  Icons.add_location,
+                  color: DARKINDED,
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: Text(
+                    "${item?.address}",
+                    style: TextStyle(
+                      color: DARK.withOpacity(.4),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: 12,
+                ),
+                Image.asset("assets/homeIcon/money.png"),
+                SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: Text(
+                    "${item?.fee}",
+                    style: TextStyle(
+                      color: DARK.withOpacity(.4),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: .6,
+                  color: WHITE.withOpacity(.4),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(22)),
+                  child: InkWell(
+                    onTap: () {
+                      NavigatPushTo(
+                          context: context, widget: DoctorProfile(item: item));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            "More ",
+                            style: TextStyle(
+                                color: Colors.white60,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.white60,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-      ],
-    ));
+        ));

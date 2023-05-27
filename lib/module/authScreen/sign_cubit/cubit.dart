@@ -43,6 +43,12 @@ class SignCubit extends Cubit<SignState> {
     LoginWithGoogleToServer();
   }
 
+  bool isVisable = false;
+  changePasswordVisability() {
+    isVisable = !isVisable;
+    emit(ChangeVisableState());
+  }
+
   LoginWithGoogleToServer() async {
     emit(SignInLoadingState());
 

@@ -100,7 +100,7 @@ class Login extends StatelessWidget {
                         prefix: Icons.lock,
                         suffix: SignCubit.get(context).isVisable
                             ? Icons.visibility_off_outlined
-                            :Icons.visibility,
+                            : Icons.visibility,
                         suffixfun: () {
                           SignCubit.get(context).changePasswordVisability();
                         },
@@ -125,11 +125,15 @@ class Login extends StatelessWidget {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (_) => AddUserImage()));
                     }
-                    if (state is SignInWithGooglOld) {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (_) => HomeLayout()));
-                    }
-                    if (state is LogInSuccessState) {
+                    // if (state is SignInWithGooglOld ) {
+                    //   SignCubit.get(context).getUserData();
+                    //   // Navigator.pushReplacement(context,
+                    //   //     MaterialPageRoute(builder: (_) => HomeLayout()));
+                    // }
+
+                    if (state is GetUserDataSucces ||
+                        state is LogInSuccessState ||
+                        state is SignInWithGooglOld) {
                       Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (_) => HomeLayout()));
                     }

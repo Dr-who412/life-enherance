@@ -35,3 +35,5 @@ class UploadChatImageError extends SignState {}
 class UploadChatImageSuccess extends SignState {}
 
 class UpdateUSerSuccessState extends SignState {}
+
+class ShowDrawerState extends SignState {}

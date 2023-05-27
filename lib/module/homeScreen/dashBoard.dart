@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+
 import '../../shared/componant/componant.dart';
 import '../../shared/style/colors.dart';
 
@@ -8,40 +9,12 @@ class DashBord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          "today",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        Row(
-          children: [
-            Text(
-              "Good Morning",
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            Spacer(),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.arrow_forward_ios_rounded),
-              color: Colors.white,
-            )
-          ],
-        ),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Report",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
         const SizedBox(height: 6),
         Flexible(
           fit: FlexFit.loose,
-
           child: CastumCard(
             color: Colors.white,
             child: Column(
@@ -51,7 +24,8 @@ class DashBord extends StatelessWidget {
                   child: Text(
                     "Goals",
                     style: TextStyle(
-                        color: HexColor("#0A1C1C"), fontWeight: FontWeight.bold),
+                        color: HexColor("#0A1C1C"),
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Stack(
@@ -69,7 +43,8 @@ class DashBord extends StatelessWidget {
                         Text(
                           "Calories",
                           style: TextStyle(
-                              color: Colors.black26, fontWeight: FontWeight.bold),
+                              color: Colors.black26,
+                              fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -79,7 +54,6 @@ class DashBord extends StatelessWidget {
                   height: 6,
                 ),
                 Row(
-
                   children: [
                     Expanded(
                       child: DashSection(
@@ -89,7 +63,6 @@ class DashBord extends StatelessWidget {
                           titleColor: Colors.white,
                           dashColor: HexColor("#198787")),
                     ),
-
                     Expanded(
                       child: DashSection(
                           title: 'Protens',
@@ -98,7 +71,6 @@ class DashBord extends StatelessWidget {
                           titleColor: HexColor("#787878"),
                           dashColor: HexColor("#EFEEE9")),
                     ),
-
                     Expanded(
                       child: DashSection(
                           title: 'Fat',
@@ -187,37 +159,35 @@ class DashBord extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     CastumCard(
-                      child: Column(
-                        children: [
-                          //Icon(Icons.add,color: Colors.white,),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.asset("assets/dash/moon.png"),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                "Dinner",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            "234 col,\n no carbs",
-                            style: TextStyle(
-                              color: Colors.white,
+                        child: Column(
+                          children: [
+                            //Icon(Icons.add,color: Colors.white,),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Image.asset("assets/dash/moon.png"),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  "Dinner",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      color: DARK),
-
+                            Text(
+                              "234 col,\n no carbs",
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        color: DARK),
                   ],
                 ),
               ),

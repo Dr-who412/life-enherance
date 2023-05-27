@@ -31,9 +31,9 @@ class ToDo extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 22),
               )),
-              Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Image.asset("assets/todo/uprightarrow.png")),
+              // Align(
+              //     alignment: Alignment.bottomCenter,
+              //     child: Image.asset("assets/todo/uprightarrow.png")),
               Image.asset("assets/todo/planning.png"),
             ],
           ),

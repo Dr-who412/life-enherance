@@ -327,6 +327,7 @@ class _BmiState extends State<Bmi> {
                     SignCubit.get(context).updateDate(
                         BMI: (wight / pow(hight.round() / 100, 2)).round(),
                         height: hight.round(),
+                        age: age,
                         weight: wight.round(),
                         isMale: isMale ? true : false);
                   },

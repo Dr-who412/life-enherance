@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:life_partner/layout/homeLayout.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
 import 'package:life_partner/module/homeScreen/cubit/homeCubit.dart';
 import 'package:life_partner/shared/componant/constant.dart';
 import 'package:life_partner/shared/shared_preference/cachHelper.dart';
 
 import 'firebase_options.dart';
-import 'layout/homeLayout.dart';
 import 'module/authScreen/login.dart';
 
 void main() async {
@@ -17,7 +17,7 @@ void main() async {
   );
   await CacheHelper.init();
   AppConstant.Token = await CacheHelper.getdata(key: 'token') ?? '';
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,14 +39,6 @@ class MyApp extends StatelessWidget {
         home: (AppConstant.Token != null && AppConstant.Token.isNotEmpty)
             ? HomeLayout()
             : Login(),
-
-        // home: Login(),
-        /*  initialRoute: Login.routeName,
-        routes: {
-          Login.routeName: (_) => Login(),
-          DailyWorkout.routeName: (_) => DailyWorkout()
-        },*/
-
         debugShowCheckedModeBanner: false,
       ),
     );

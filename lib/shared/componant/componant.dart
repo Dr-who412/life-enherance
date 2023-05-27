@@ -106,55 +106,26 @@ Widget DashSection(
         ],
       ),
     );
-Widget MyAppBar(BuildContext context) => Row(
-      children: [
-        Container(
-            margin: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: DARK,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: IconButton(
-              onPressed: () {
-                SignCubit.get(context).logOut();
-              },
-              icon: Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-            )),
-        Spacer(),
-        (SignCubit.get(context).user?.image ?? '').isNotEmpty
-            ? CachedNetworkImage(
-                imageUrl: "${SignCubit.get(context).user?.image}",
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                        colorFilter:
-                            ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
-                  ),
-                ),
-                placeholder: (context, url) => CircleAvatar(
-                  radius: 22,
-                  backgroundImage: AssetImage('assets/img.png'),
-                ),
-                //          errorWidget: (context, url, error) => CircleAvatar(
-                //   radius: 22,
-                //   backgroundImage:AssetImage('assets/img.png'),
-                // ),
-              )
-            : CircleAvatar(
-                radius: 22,
-                backgroundImage: AssetImage('assets/img.png'),
-              ),
-        // CircleAvatar(
-        //   radius: 22,
-        //   backgroundImage:AssetImage('assets/img.png'),
-        // ),
-      ],
+Widget MyAppBar(BuildContext context) => CachedNetworkImage(
+      imageUrl: "${SignCubit.get(context).user?.image}",
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+              image: imageProvider,
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+        ),
+      ),
+      placeholder: (context, url) => Center(
+        child: CircularProgressIndicator(
+          color: Colors.white54,
+        ),
+      ),
+      errorWidget: (context, url, error) => CircleAvatar(
+        radius: 22,
+        backgroundImage: AssetImage('assets/img.png'),
+      ),
     );
 Widget todoTask({
   required String task,

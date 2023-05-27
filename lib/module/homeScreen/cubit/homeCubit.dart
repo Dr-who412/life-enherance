@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_partner/model/exr_model.dart';
 import 'package:life_partner/model/todo_tasks_model.dart';
 import 'package:life_partner/module/homeScreen/cubit/state.dart';
-import 'package:life_partner/module/homeScreen/traning.dart';
+import 'package:life_partner/module/homeScreen/traningsc.dart';
 import 'package:life_partner/shared/componant/componant.dart';
 import 'package:life_partner/shared/componant/constant.dart';
 import 'package:life_partner/shared/network/httpHelper.dart';
@@ -21,7 +21,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<Widget> Screens = [
     DashBord(),
     ToDo(),
-    Traning(),
+    Tranning2(),
     Doctor(),
   ];
   void ChangeNavBarScreen({required index}) {
@@ -33,24 +33,26 @@ class HomeCubit extends Cubit<HomeState> {
     if (index == 1) {
       getTodoTAsks();
     }
-    // if (index == 2) {
-    //   print("gettt exr");
-    //   getExerciseLevel();
-    // }
+    if (index == 2&&exrModel==null) {
+      print("gettt exr");
+      getExerciseLevel();
+    }
   }
 
   ///get Doctor
   List<DoctorModel> doctors = [];
   getAllDoctor() {
+    print(AppConstant.Token);
     emit(GetDoctorsLoading());
-    doctors = [];
     getData(
       pathUrl: AppApi.GetAllDoctor,
       token: AppConstant.Token,
     ).then((value) {
+      doctors = [];
       value.forEach((element) {
         doctors.add(DoctorModel.fromJson(element));
       });
+      print(value);
       print(doctors.length);
       emit(GetDoctorsSuccess());
     }).catchError((error) {
@@ -77,6 +79,7 @@ class HomeCubit extends Cubit<HomeState> {
   getExerciseLevel() async {
     exrModel = null;
     emit(GetEXRLoading());
+
     await postData(
         pathUrl: AppApi.exerciseLevel,
         token: AppConstant.Token,

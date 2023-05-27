@@ -37,24 +37,20 @@ class Doctor extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               child: ConditionalBuilder(
                 condition: state is! GetDoctorsLoading,
-                builder:(context)=>ListView.builder(
-                    itemCount: HomeCubit
-                        .get(context)
-                        .doctors
-                        .length,
-                    itemBuilder: (BuildContext context, int index) =>DoctorCard(context: context,item: HomeCubit
-                        .get(context)
-                        .doctors[index] ),
-
+                builder: (context) => ListView.builder(
+                  itemCount: HomeCubit.get(context).doctors.length,
+                  itemBuilder: (BuildContext context, int index) => DoctorCard(
+                      context: context,
+                      item: HomeCubit.get(context).doctors[index]),
                 ),
-                fallback: (BuildContext context) =>
-                    Center(child: CircularProgressIndicator(color: Colors.white.withOpacity(0.6),)),
-
+                fallback: (BuildContext context) => Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.white.withOpacity(0.6),
+                )),
               ),
             );
           },
         )
-
       ],
     );
   }

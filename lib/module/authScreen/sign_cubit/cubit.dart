@@ -66,7 +66,7 @@ class SignCubit extends Cubit<SignState> {
         AppConstant.Token = value['token'];
         CacheHelper.saveData(
           key: 'token',
-          value: '${AppConstant.Token}',
+          value: '${value['token']}',
         ).then((va) {
           user = UserModel.fromJson(value['user']);
           print('get user success :::${user?.name}');
@@ -163,6 +163,7 @@ class SignCubit extends Cubit<SignState> {
       pathUrl: AppApi.GetUser,
       token: AppConstant.Token,
     ).then((value) {
+      print("cccccccccccccccccccccccccccccc");
       if (value['status'] == true) {
         user = UserModel.fromJson(value['user']);
         showtoast(text: 'hi ${user?.name}', state: toastStates.SUCESS);
@@ -216,11 +217,13 @@ class SignCubit extends Cubit<SignState> {
       {required int? BMI,
       required int? height,
       required int? weight,
+      required int? age,
       bool isMale = true}) {
     postData(pathUrl: AppApi.UpdateUser, token: AppConstant.Token, body: {
       "email": "${user?.email}",
       "BMI": '$BMI',
       "height": "$height",
+      "age": '$age',
       "weight": "$weight",
       'gender': isMale ? 'male' : 'female',
       "PhotoURL": "${profileUrl ?? user?.image}"
@@ -230,9 +233,16 @@ class SignCubit extends Cubit<SignState> {
         showtoast(text: 'updated Successfully', state: toastStates.SUCESS);
         emit(UpdateUSerSuccessState());
       }
+      print(value);
     }).catchError((error) {
       showtoast(text: 'failed update', state: toastStates.WARRING);
       print(error.toString());
     });
+  }
+
+  bool showDrower = false;
+  ShowDrawer() {
+    showDrower = !showDrower;
+    emit(ShowDrawerState());
   }
 }

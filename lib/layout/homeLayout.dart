@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
@@ -18,6 +19,13 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SignCubit.get(context).getUserData();
+  }
+
   @override
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
@@ -105,8 +113,39 @@ class _HomeLayoutState extends State<HomeLayout> {
                                   print("object");
                                   _scaffoldKey.currentState!.openDrawer();
                                 },
-                                child: MyAppBar(
-                                  context,
+                                child: BlocConsumer<SignCubit, SignState>(
+                                  listener: (context, state) {
+                                    // TODO: implement listener
+                                  },
+                                  builder: (context, state) {
+                                    return CachedNetworkImage(
+                                      imageUrl:
+                                          "https://firebasestorage.googleapis.com/v0/b/lifeenhancer.appspot.com/o/Images%2F20230528_214550.jpg?alt=media&token=e5150a49-f843-43be-8950-b16964b60ec3",
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        width: 56,
+                                        height: 56,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      // placeholder: (context, url) => Center(
+                                      //   child: CircularProgressIndicator(
+                                      //     color: Colors.white54,
+                                      //   ),
+                                      // ),
+                                      errorWidget: (context, url, error) =>
+                                          CircleAvatar(
+                                        radius: 22,
+                                        backgroundImage:
+                                            AssetImage('assets/img.png'),
+                                      ),
+                                    );
+                                  },
                                 ))),
                         cubit.Screens[cubit.currentScreen],
                       ],

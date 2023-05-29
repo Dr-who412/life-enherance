@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_partner/cardsScrol/data.dart';
@@ -89,27 +91,62 @@ class _ExrScreenState extends State<ExrScreen> {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                Container(
-                  alignment: Alignment.center,
-                  child: Card(
-                    clipBehavior: Clip.hardEdge,
-                    color: WHITE.withOpacity(.4),
-                    elevation: 16,
-                    shadowColor: DARKINDED,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: YoutubePlayer(
-                        controller: _controller,
-                        showVideoProgressIndicator: true,
-                        width: double.infinity,
-                        progressIndicatorColor: Colors.white54.withOpacity(.4),
-                        onReady: () => _controller.addListener(listener),
+                BlocConsumer<HomeCubit, HomeState>(
+                  listener: (context, state) {
+                    if (state is ChangeVedioId) {
+                      print('change vedio ');
+                      setState(() {
+                        // print('fffff');
+                        // videoId = YoutubePlayer.convertUrlToId(
+                        //     "${HomeCubit.get(context).VID}");
+                        //
+                        // _controller = YoutubePlayerController(
+                        //   initialVideoId: videoId ?? '',
+                        //   flags: YoutubePlayerFlags(
+                        //     autoPlay: true,
+                        //     mute: true,
+                        //     loop: false,
+                        //   ),
+                        // )..addListener(listener);
+                      });
+                      // _controller = YoutubePlayerController(
+                      //   initialVideoId: YoutubePlayer.convertUrlToId(
+                      //           "${HomeCubit.get(context).VID}") ??
+                      //       '',
+                      //   flags: YoutubePlayerFlags(
+                      //     autoPlay: true,
+                      //     mute: true,
+                      //     loop: false,
+                      //   ),
+                      // )..addListener(listener);
+                    }
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Card(
+                        clipBehavior: Clip.hardEdge,
+                        color: WHITE.withOpacity(.4),
+                        elevation: 16,
+                        shadowColor: DARKINDED,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: YoutubePlayer(
+                            controller: _controller,
+                            showVideoProgressIndicator: true,
+                            width: double.infinity,
+                            progressIndicatorColor:
+                                Colors.white54.withOpacity(.4),
+                            onReady: () => _controller.addListener(listener),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 2 / 5,
@@ -117,24 +154,33 @@ class _ExrScreenState extends State<ExrScreen> {
                   padding: const EdgeInsets.all(20),
                   child: CoolSwiper(
                     children: List.generate(
-                      Data.colors.length,
+                      9,
                       (index) => BlocListener<HomeCubit, HomeState>(
-                        listener: (context, state) {
-                          // TODO: implement listener}
-                          if (State is ChangeVedioId) {
-                            setState(() {
-                              print('fffff');
-                              videoId = YoutubePlayer.convertUrlToId(
-                                  "${HomeCubit.get(context).exrModel?.exercise[index].uRL}");
-                            });
-                          }
-                        },
-                        child: CardContent(
-                          color: Data.colors[index],
-                          index: index,
-                          onTap: () {},
-                        ),
-                      ),
+                          listener: (context, state) {
+                            // TODO: implement listener}
+                            if (State is ChangeVedioId) {}
+                          },
+                          child: (HomeCubit.get(context)
+                                      .exrModel
+                                      ?.exercise[index] !=
+                                  widget.item)
+                              ? CardContent(
+                                  currentItem: widget.item,
+                                  color: Data.colors[index],
+                                  index: index,
+                                  onTap: () {
+                                    print('xxxxxxxxxxxxxxxx');
+                                  },
+                                )
+                              : CardContent(
+                                  currentItem: widget.item,
+                                  color: Data.colors[index],
+                                  index:
+                                      index > 2 ? Random().nextInt(index) : 1,
+                                  onTap: () {
+                                    print('xxxxxxxxxxxxxxxx');
+                                  },
+                                )),
                     ),
                   ),
                 ),

@@ -9,5 +9,6 @@ class AppApi {
   static String GetAllDoctor = 'doctor/alldoctors';
   static String GetDocProfile = 'doctor/doctorsid';
   static String exerciseLevel = 'exercise/exerciseLevel';
+  static String allexercises = 'exercise/allexercises';
   static String daily_task = 'todo/daily_task';
 }

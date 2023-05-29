@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
+import 'package:life_partner/module/authScreen/sign_cubit/sign_state.dart';
 
 import '../../model/auth_model/doctors.dart';
 import '../../module/homeScreen/doctorScreen/doctorProfile.dart';
@@ -106,26 +108,35 @@ Widget DashSection(
         ],
       ),
     );
-Widget MyAppBar(BuildContext context) => CachedNetworkImage(
-      imageUrl: "${SignCubit.get(context).user?.image}",
-      imageBuilder: (context, imageProvider) => Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-              image: imageProvider,
-              fit: BoxFit.cover,
-              colorFilter: ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
-        ),
-      ),
-      placeholder: (context, url) => Center(
-        child: CircularProgressIndicator(
-          color: Colors.white54,
-        ),
-      ),
-      errorWidget: (context, url, error) => CircleAvatar(
-        radius: 22,
-        backgroundImage: AssetImage('assets/img.png'),
-      ),
+Widget MyAppBar(BuildContext context) => BlocConsumer<SignCubit, SignState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return CachedNetworkImage(
+          imageUrl:
+              "https://firebasestorage.googleapis.com/v0/b/lifeenhancer.appspot.com/o/Images%2F20230528_214550.jpg?alt=media&token=e5150a49-f843-43be-8950-b16964b60ec3",
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                  colorFilter:
+                      ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+            ),
+          ),
+          // placeholder: (context, url) => Center(
+          //   child: CircularProgressIndicator(
+          //     color: Colors.white54,
+          //   ),
+          // ),
+          errorWidget: (context, url, error) => CircleAvatar(
+            radius: 22,
+            backgroundImage: AssetImage('assets/img.png'),
+          ),
+        );
+      },
     );
 Widget todoTask({
   required String task,

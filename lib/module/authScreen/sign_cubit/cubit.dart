@@ -69,14 +69,14 @@ class SignCubit extends Cubit<SignState> {
           value: '${value['token']}',
         ).then((va) {
           user = UserModel.fromJson(value['user']);
-          print('get user success :::${user?.name}');
+          print('get user success :::${user?.user?.name}');
           if (value['isNew']) {
             emit(SignInWithGooglFirstTime());
           }
           if (!value['isNew']) {
             emit(SignInWithGooglOld());
           }
-          showtoast(text: 'hi ${user?.name}', state: toastStates.SUCESS);
+          showtoast(text: 'hi ${user?.user?.name}', state: toastStates.SUCESS);
         });
       } else {
         showtoast(text: 'error: ${value['message']}', state: toastStates.ERROR);
@@ -110,9 +110,8 @@ class SignCubit extends Cubit<SignState> {
           value: '${AppConstant.Token}',
         ).then((va) {
           user = UserModel.fromJson(value['user']);
-          print('get user success :::${user?.name}');
           emit(SignInSuccessState());
-          showtoast(text: 'hi ${user?.name}', state: toastStates.SUCESS);
+          showtoast(text: 'hi ${user?.user?.name}', state: toastStates.SUCESS);
         });
       } else {
         emit(SignInErrorState());
@@ -138,7 +137,7 @@ class SignCubit extends Cubit<SignState> {
           value: '${AppConstant.Token}',
         ).then((vl) {
           user = UserModel.fromJson(value['user']);
-          showtoast(text: 'hi ${user?.name}', state: toastStates.SUCESS);
+          showtoast(text: 'hi ${user?.user?.name}', state: toastStates.SUCESS);
           emit(LogInSuccessState());
         });
       } else {
@@ -163,11 +162,12 @@ class SignCubit extends Cubit<SignState> {
       pathUrl: AppApi.GetUser,
       token: AppConstant.Token,
     ).then((value) {
-      print("cccccccccccccccccccccccccccccc");
+      print("cccccccccccccccccccccc$value cccccccc");
       if (value['status'] == true) {
-        user = UserModel.fromJson(value['user']);
-        showtoast(text: 'hi ${user?.name}', state: toastStates.SUCESS);
+        user = UserModel.fromJson(value);
+        showtoast(text: 'hi ${user?.user?.name}', state: toastStates.SUCESS);
         emit(GetUserDataSucces());
+        print(user);
       } else {
         showtoast(text: 'faild load user data', state: toastStates.ERROR);
       }
@@ -220,13 +220,13 @@ class SignCubit extends Cubit<SignState> {
       required int? age,
       bool isMale = true}) {
     postData(pathUrl: AppApi.UpdateUser, token: AppConstant.Token, body: {
-      "email": "${user?.email}",
+      "email": "${user?.user?.email}",
       "BMI": '$BMI',
       "height": "$height",
       "age": '$age',
       "weight": "$weight",
       'gender': isMale ? 'male' : 'female',
-      "PhotoURL": "${profileUrl ?? user?.image}"
+      "PhotoURL": "${profileUrl ?? user?.user?.photoURL}"
     }).then((value) {
       if (value['status'] == true) {
         user = UserModel.fromJson(value['user']);

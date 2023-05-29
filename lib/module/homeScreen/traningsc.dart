@@ -85,8 +85,7 @@ class Tranning2 extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 2 / 3,
                 child: GridView.custom(
                   physics: BouncingScrollPhysics(),
-                  semanticChildCount:
-                      HomeCubit.get(context).exrModel?.exercise.length,
+                  semanticChildCount: 9,
                   gridDelegate: SliverQuiltedGridDelegate(
                     crossAxisCount: 4,
                     mainAxisSpacing: 2,
@@ -100,6 +99,7 @@ class Tranning2 extends StatelessWidget {
                     ],
                   ),
                   childrenDelegate: SliverChildBuilderDelegate(
+                    childCount: 10,
                     (context, index) => CategoryWidget2(
                       item: HomeCubit.get(context).exrModel?.exercise[index],
                       onTap: () => Navigator.push(

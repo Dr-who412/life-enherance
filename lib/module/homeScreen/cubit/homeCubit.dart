@@ -27,15 +27,17 @@ class HomeCubit extends Cubit<HomeState> {
   void ChangeNavBarScreen({required index}) {
     currentScreen = index;
     emit(ChangeNavBar());
+
     if (index == 3) {
       getAllDoctor();
     }
     if (index == 1) {
       getTodoTAsks();
     }
-    if (index == 2&&exrModel==null) {
+    if (index == 2 && exrModel == null) {
       print("gettt exr");
-      getExerciseLevel();
+      // getExerciseLevel();
+      getExerciseall();
     }
   }
 
@@ -79,7 +81,6 @@ class HomeCubit extends Cubit<HomeState> {
   getExerciseLevel() async {
     exrModel = null;
     emit(GetEXRLoading());
-
     await postData(
         pathUrl: AppApi.exerciseLevel,
         token: AppConstant.Token,
@@ -100,7 +101,29 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
-  changeVedioId() {
+  getExerciseall() async {
+    exrModel = null;
+    emit(GetEXRLoading());
+    await getData(
+      pathUrl: AppApi.allexercises,
+    ).then((value) {
+      print(value);
+      if (value['status']) {
+        exrModel = EXRModel.fromJson(value);
+        emit(GetEXRSuccess());
+      } else {
+        showtoast(text: 'load vedio error', state: toastStates.WARRING);
+        emit(GetEXRError());
+      }
+    }).catchError((error) {
+      print('error::$error');
+      emit(GetEXRError());
+    });
+  }
+
+  String VID = '';
+  changeVedioId({required String vid}) {
+    VID = vid;
     emit(ChangeVedioId());
   }
 

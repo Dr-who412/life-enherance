@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
 
 import '../../shared/componant/componant.dart';
 import '../../shared/style/colors.dart';
@@ -35,7 +36,7 @@ class DashBord extends StatelessWidget {
                     Column(
                       children: [
                         Text(
-                          "938/2500",
+                          "${SignCubit.get(context).user?.user?.bmr?.round()}",
                           style: TextStyle(
                               color: HexColor("#0A1C1C"),
                               fontWeight: FontWeight.bold),

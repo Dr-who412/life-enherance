@@ -6,9 +6,9 @@ class EXRModel {
 
   EXRModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    if (json['exercise'] != null) {
+    if (json['exercises'] != null) {
       exercise = <Exercise>[];
-      json['exercise'].forEach((v) {
+      json['exercises'].forEach((v) {
         exercise!.add(new Exercise.fromJson(v));
       });
     }

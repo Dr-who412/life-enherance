@@ -3,7 +3,7 @@ class AppApi {
   static String Login = 'user/login';
   static String Signup = 'user/signup';
   static String gmailAuth = 'user/gmailAuth';
-  static String GetUser = 'user/id';
+  static String GetUser = 'user/getuser';
   static String UpdateUser = 'user/update';
   static String DeleteUser = 'user/delete';
   static String GetAllDoctor = 'doctor/alldoctors';
@@ -11,4 +11,7 @@ class AppApi {
   static String exerciseLevel = 'exercise/exerciseLevel';
   static String allexercises = 'exercise/allexercises';
   static String daily_task = 'todo/daily_task';
+  static String select_diet = 'diet/select_diet';
+  static String weeklyDiet = 'diet/weekdiet';
+  static String dietweekid = 'diet/weekid';
 }

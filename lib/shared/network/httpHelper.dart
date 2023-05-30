@@ -45,7 +45,23 @@ Future getData(
     'Authorization': 'Bearer $token'
   });
   print(res.body.toString());
+  if (res.statusCode == 200) {
+    print(await res.body.toString());
+    return jsonDecode(res.body.toString());
+  } else {
+    print(res.reasonPhrase);
+  }
+}
 
+Future getDataByUrl(
+    {required String Url, Map<String, dynamic>? query, token}) async {
+  var client = http.Client();
+  var url = Uri.parse('$Url');
+  var res = await client.get(url, headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $token'
+  });
+  print(res.body.toString());
   if (res.statusCode == 200) {
     print(await res.body.toString());
     return jsonDecode(res.body.toString());

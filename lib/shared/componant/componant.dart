@@ -91,16 +91,11 @@ Widget DashSection(
             height: 8,
           ),
           Text(
-            "cateh",
+            "$title",
             style: TextStyle(color: titleColor, fontWeight: FontWeight.bold),
           ),
           Text(
-            "5/31g",
-            style:
-                TextStyle(color: Colors.black38, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            "22g left",
+            "$limit",
             style: TextStyle(
               color: Colors.black38,
             ),
@@ -226,8 +221,7 @@ Widget CastumCard({
         child: child,
       ),
     );
-Widget DoctorCard(
-        {required BuildContext context, required DoctorModel? item}) =>
+Widget DoctorCard({required BuildContext context, required AllDoctors? item}) =>
     CastumCard(
         color: WHITE.withOpacity(.4),
         child: Column(
@@ -253,7 +247,7 @@ Widget DoctorCard(
                 ),
                 Expanded(
                   child: Text(
-                    '${item?.name}',
+                    '${item?.doctor}',
                     style: TextStyle(
                       color: DARK.withOpacity(.6),
                       fontWeight: FontWeight.bold,
@@ -330,7 +324,7 @@ Widget DoctorCard(
                 ),
                 Expanded(
                   child: Text(
-                    "${item?.fee}",
+                    "${item?.price}",
                     style: TextStyle(
                       color: DARK.withOpacity(.4),
                       fontWeight: FontWeight.bold,

@@ -20,9 +20,9 @@ class Tranning2 extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            MeasuringWidget(0, 'WORKOUT'),
-            MeasuringWidget(0, 'KCAL'),
-            MeasuringWidget(0, 'MINUTE'),
+            MeasuringWidget(12, 'WORKOUT'),
+            MeasuringWidget(5, 'KCAL'),
+            MeasuringWidget(30, 'MINUTE'),
           ],
         ),
         SizedBox(
@@ -52,18 +52,19 @@ class Tranning2 extends StatelessWidget {
                       // crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Set weekly goals for a better body shape',
+                          'Be Strong and Finish Your Exercises and Mainrain Your Diet Every Day ',
+                          textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.grey),
                         ),
                         SizedBox(height: 5),
-                        ElevatedButton(
-                            onPressed: () {},
-                            child: Text('SET A GOAL'),
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                backgroundColor: Color(0xFF3E6864)))
+                        // ElevatedButton(
+                        //     onPressed: () {},
+                        //     child: Text('SET A GOAL'),
+                        //     style: ElevatedButton.styleFrom(
+                        //         shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(20),
+                        //         ),
+                        //         backgroundColor: Color(0xFF3E6864)))
                       ]),
                 )
               ],

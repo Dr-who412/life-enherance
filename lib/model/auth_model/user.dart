@@ -29,10 +29,13 @@ class User {
   String? photoURL;
   int? age;
   double? bmr;
+  String? diet;
   int? dietLevel;
+  int? exerciceLevel;
   String? gender;
   int? height;
   int? weight;
+  String? dietPlan;
 
   User(
       {this.sId,
@@ -44,10 +47,13 @@ class User {
       this.photoURL,
       this.age,
       this.bmr,
+      this.diet,
       this.dietLevel,
+      this.exerciceLevel,
       this.gender,
       this.height,
-      this.weight});
+      this.weight,
+      this.dietPlan});
 
   User.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -59,10 +65,13 @@ class User {
     photoURL = json['PhotoURL'];
     age = json['age'];
     bmr = json['bmr'];
+    diet = json['diet'];
     dietLevel = json['dietLevel'];
+    exerciceLevel = json['exerciceLevel'];
     gender = json['gender'];
     height = json['height'];
     weight = json['weight'];
+    dietPlan = json['dietPlan'];
   }
 
   Map<String, dynamic> toJson() {
@@ -76,10 +85,13 @@ class User {
     data['PhotoURL'] = this.photoURL;
     data['age'] = this.age;
     data['bmr'] = this.bmr;
+    data['diet'] = this.diet;
     data['dietLevel'] = this.dietLevel;
+    data['exerciceLevel'] = this.exerciceLevel;
     data['gender'] = this.gender;
     data['height'] = this.height;
     data['weight'] = this.weight;
+    data['dietPlan'] = this.dietPlan;
     return data;
   }
 }

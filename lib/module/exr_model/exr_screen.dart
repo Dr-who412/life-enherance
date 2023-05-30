@@ -23,9 +23,9 @@ class ExrScreen extends StatefulWidget {
 }
 
 class _ExrScreenState extends State<ExrScreen> {
-  late TextEditingController _idController;
+  TextEditingController? _idController;
 
-  late TextEditingController _seekToController;
+  TextEditingController? _seekToController;
 
   late PlayerState _playerState;
 
@@ -47,14 +47,18 @@ class _ExrScreenState extends State<ExrScreen> {
     print(widget.item?.sId); // BBAyRBTfsOU
 // BBAyRBTfsOU
     super.initState();
+    print(
+        "Play vedio ${YoutubePlayer.convertUrlToId("${widget.item?.uRL}").toString()}");
     _controller = YoutubePlayerController(
-      initialVideoId: videoId ?? '',
+      initialVideoId: videoId ??
+          YoutubePlayer.convertUrlToId("${widget.item?.uRL}").toString(),
       flags: YoutubePlayerFlags(
         autoPlay: true,
         mute: true,
-        loop: false,
+        loop: true,
       ),
     )..addListener(listener);
+    Future.delayed(Duration.zero, () {});
   }
 
   void listener() {
@@ -76,8 +80,8 @@ class _ExrScreenState extends State<ExrScreen> {
   @override
   void dispose() {
     _controller.dispose();
-    _idController.dispose();
-    _seekToController.dispose();
+    _idController?.dispose();
+    _seekToController?.dispose();
     super.dispose();
   }
 

@@ -1,31 +1,52 @@
-class DoctorModel {
+class AllDoctors {
   String? sId;
-  String? name;
+  String? doctor;
+  String? description;
+  String? brief;
+  String? area;
   String? address;
-  int? fee;
-  int? rate;
-  String? phone;
+  String? rate;
+  String? price;
+  String? link;
+  String? phoneNumber;
 
-  DoctorModel(
-      {this.sId, this.name, this.address, this.fee, this.rate, this.phone});
+  AllDoctors(
+      {this.sId,
+      this.doctor,
+      this.description,
+      this.brief,
+      this.area,
+      this.address,
+      this.rate,
+      this.price,
+      this.link,
+      this.phoneNumber});
 
-  DoctorModel.fromJson(Map<String, dynamic> json) {
+  AllDoctors.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    name = json['Name'];
+    doctor = json['Doctor'];
+    description = json['Description'];
+    brief = json['Brief'];
+    area = json['Area'];
     address = json['Address'];
-    fee = json['Fee'];
-    rate = json['rate'];
-    phone = json['phone'];
+    rate = json['Rate'];
+    price = json['Price'];
+    link = json['Link'];
+    phoneNumber = json['Phone number'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
-    data['Name'] = this.name;
+    data['Doctor'] = this.doctor;
+    data['Description'] = this.description;
+    data['Brief'] = this.brief;
+    data['Area'] = this.area;
     data['Address'] = this.address;
-    data['Fee'] = this.fee;
-    data['rate'] = this.rate;
-    data['phone'] = this.phone;
+    data['Rate'] = this.rate;
+    data['Price'] = this.price;
+    data['Link'] = this.link;
+    data['Phone number'] = this.phoneNumber;
     return data;
   }
 }

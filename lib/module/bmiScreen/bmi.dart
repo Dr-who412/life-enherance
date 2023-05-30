@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/sign_state.dart';
+import 'package:life_partner/module/bmiScreen/questions.dart';
 
-import '../../layout/homeLayout.dart';
 import '../../shared/componant/componant.dart';
 
 class Bmi extends StatefulWidget {
@@ -312,24 +312,27 @@ class _BmiState extends State<Bmi> {
               BlocListener<SignCubit, SignState>(
                 listener: (context, state) {
                   // TODO: implement listener}
-                  if (state is UpdateUSerSuccessState) {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (_) => HomeLayout()),
-                      (route) => false,
-                    );
-                  }
                 },
                 child: FloatingActionButton(
                   heroTag: 'bmi',
                   onPressed: () {
+                    SignCubit.get(context).BMI =
+                        (wight / pow(hight.round() / 100, 2)).round();
+                    SignCubit.get(context).height = hight.round();
+                    SignCubit.get(context).weight = (wight).round();
+                    SignCubit.get(context).age = age;
+                    SignCubit.get(context).isMale = isMale ? true : false;
                     // todo: update user data (bmi and image) to server
-                    SignCubit.get(context).updateDate(
-                        BMI: (wight / pow(hight.round() / 100, 2)).round(),
-                        height: hight.round(),
-                        age: age,
-                        weight: wight.round(),
-                        isMale: isMale ? true : false);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => Questions()));
+                    // SignCubit.get(context).updateDate(
+                    //     BMI: (wight / pow(hight.round() / 100, 2)).round(),
+                    //     height: hight.round(),
+                    //     age: age,
+                    //     weight: wight.round(),
+                    //     isMale: isMale ? true : false);
                   },
                   elevation: 6,
                   backgroundColor: Colors.white,

@@ -5,10 +5,10 @@ import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
 import 'package:life_partner/module/homeScreen/cubit/homeCubit.dart';
 import 'package:life_partner/module/homeScreen/cubit/state.dart';
 import 'package:life_partner/shared/componant/componant.dart';
+import 'package:life_partner/shared/componant/constant.dart';
 
 import '../module/authScreen/login.dart';
 import '../module/authScreen/sign_cubit/sign_state.dart';
-import '../module/homeScreen/todo/addTask.dart';
 import '../shared/style/colors.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -23,16 +23,21 @@ class _HomeLayoutState extends State<HomeLayout> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SignCubit.get(context).getUserData();
+    Future.delayed(Duration.zero, () => SignCubit.get(context).getUserData());
   }
 
   @override
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-
   Widget build(BuildContext context) {
     return BlocConsumer<HomeCubit, HomeState>(
       listener: (context, state) {
         // TODO: implement listener
+        if (AppConstant.Token == '' || AppConstant.Token == null) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => Login()),
+              (route) => false);
+        }
       },
       builder: (context, state) {
         var cubit = HomeCubit.get(context);
@@ -49,6 +54,11 @@ class _HomeLayoutState extends State<HomeLayout> {
                       context,
                       MaterialPageRoute(builder: (context) => Login()),
                       (route) => false);
+                }
+                print(State);
+                if (state is GetUserDataSucces &&
+                    SignCubit.get(context).weeklyDiet == null) {
+                  SignCubit.get(context).getWeaklyDietDaily();
                 }
               },
               child: Scaffold(
@@ -69,25 +79,97 @@ class _HomeLayoutState extends State<HomeLayout> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: ListView(
+                      child: Column(
                         // Important: Remove any padding from the ListView.
-                        padding: EdgeInsets.zero,
+
                         children: [
-                          const DrawerHeader(
+                          DrawerHeader(
+                            margin: EdgeInsets.symmetric(horizontal: 8),
                             decoration: BoxDecoration(
                               color: Colors.transparent,
                             ),
-                            child: Text('Drawer Header'),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                    onTap: () {
+                                      // print("object1111111111111111");
+                                      // print("object");
+                                      // _scaffoldKey.currentState!.openDrawer();
+                                    },
+                                    child: BlocConsumer<SignCubit, SignState>(
+                                      listener: (context, state) {
+                                        // TODO: implement listener
+                                      },
+                                      builder: (context, state) {
+                                        return CachedNetworkImage(
+                                          imageUrl:
+                                              "${SignCubit.get(context).user?.user?.photoURL}",
+                                          imageBuilder:
+                                              (context, imageProvider) =>
+                                                  Container(
+                                            width: 68,
+                                            height: 68,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          placeholder: (context, url) =>
+                                              SizedBox(
+                                            width: 68,
+                                            height: 68,
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white54,
+                                              ),
+                                            ),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              CircleAvatar(
+                                            radius: 22,
+                                            backgroundImage:
+                                                AssetImage('assets/img.png'),
+                                          ),
+                                        );
+                                      },
+                                    )),
+                                BlocConsumer<SignCubit, SignState>(
+                                  listener: (context, state) {
+                                    // TODO: implement listener
+                                  },
+                                  builder: (context, state) {
+                                    return Text(
+                                      '${SignCubit.get(context).user?.user?.name}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 34,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
                           ),
+                          Spacer(),
+                          // ListTile(
+                          //   title: Text('Item 1'),
+                          //   onTap: () {
+                          //     // Update the state of the app.
+                          //     // ...
+                          //   },
+                          // ),
                           ListTile(
-                            title: const Text('Item 1'),
-                            onTap: () {
-                              // Update the state of the app.
-                              // ...
-                            },
-                          ),
-                          ListTile(
-                            title: const Text('Logout'),
+                            title: Text(
+                              'Logout',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
                             onTap: () {
                               SignCubit.get(context).logOut();
                             },
@@ -98,73 +180,190 @@ class _HomeLayoutState extends State<HomeLayout> {
                   ),
                 ),
                 body: BackGround(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Align(
-                            alignment: Alignment.topLeft,
-                            child: InkWell(
-                                onTap: () {
-                                  // SignCubit.get(context).logOut();
-                                  print("object");
-                                  _scaffoldKey.currentState!.openDrawer();
-                                },
-                                child: BlocConsumer<SignCubit, SignState>(
+                  child: Stack(
+                    children: [
+                      SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Align(
+                                alignment: Alignment.topLeft,
+                                child: BlocListener<SignCubit, SignState>(
                                   listener: (context, state) {
-                                    // TODO: implement listener
+                                    if (state is GetUserDataSucces &&
+                                        SignCubit.get(context).showDrower ==
+                                            true) {
+                                      SignCubit.get(context).showDrower = false;
+                                      _scaffoldKey.currentState!.openDrawer();
+                                    }
+
+                                    // TODO: implement listener}
                                   },
-                                  builder: (context, state) {
-                                    return CachedNetworkImage(
-                                      imageUrl:
-                                          "https://firebasestorage.googleapis.com/v0/b/lifeenhancer.appspot.com/o/Images%2F20230528_214550.jpg?alt=media&token=e5150a49-f843-43be-8950-b16964b60ec3",
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                        width: 56,
-                                        height: 56,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover,
+                                  child: InkWell(
+                                      onTap: () {
+                                        // SignCubit.get(context).logOut();
+                                        SignCubit.get(context).getUserData();
+                                        SignCubit.get(context).showDrower =
+                                            true;
+                                        print("object");
+                                      },
+                                      child: BlocConsumer<SignCubit, SignState>(
+                                        listener: (context, state) {
+                                          // TODO: implement listener
+                                        },
+                                        builder: (context, state) {
+                                          return CachedNetworkImage(
+                                            imageUrl:
+                                                "${SignCubit.get(context).user?.user?.photoURL}",
+                                            imageBuilder:
+                                                (context, imageProvider) =>
+                                                    Container(
+                                              width: 56,
+                                              height: 56,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                            // placeholder: (context, url) => Center(
+                                            //   child: CircularProgressIndicator(
+                                            //     color: Colors.white54,
+                                            //   ),
+                                            // ),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    CircleAvatar(
+                                              radius: 22,
+                                              backgroundImage:
+                                                  AssetImage('assets/img.png'),
+                                            ),
+                                          );
+                                        },
+                                      )),
+                                )),
+                            cubit.Screens[cubit.currentScreen],
+                          ],
+                        ),
+                      ),
+                      if (SignCubit.get(context).BMI != null &&
+                          (SignCubit.get(context).BMI ?? 0) >= 30)
+                        BlocConsumer<SignCubit, SignState>(
+                          listener: (context, state) {
+                            // TODO: implement listener
+                          },
+                          builder: (context, state) {
+                            return Align(
+                              alignment: Alignment.center,
+                              child: Card(
+                                  color: Colors.white.withOpacity(0.9),
+                                  child: Container(
+                                    height:
+                                        MediaQuery.of(context).size.height / 2,
+                                    padding: EdgeInsets.all(12),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Align(
+                                            alignment: Alignment.center,
+                                            child: BlocListener<SignCubit,
+                                                SignState>(
+                                              listener: (context, state) {
+                                                if (state
+                                                        is GetUserDataSucces &&
+                                                    SignCubit.get(context)
+                                                            .showDrower ==
+                                                        true) {
+                                                  SignCubit.get(context)
+                                                      .showDrower = false;
+                                                  _scaffoldKey.currentState!
+                                                      .openDrawer();
+                                                }
+
+                                                // TODO: implement listener}
+                                              },
+                                              child: BlocConsumer<SignCubit,
+                                                  SignState>(
+                                                listener: (context, state) {
+                                                  // TODO: implement listener
+                                                },
+                                                builder: (context, state) {
+                                                  return CachedNetworkImage(
+                                                    imageUrl:
+                                                        "${SignCubit.get(context).user?.user?.photoURL}",
+                                                    imageBuilder: (context,
+                                                            imageProvider) =>
+                                                        Container(
+                                                      width: 90,
+                                                      height: 90,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    // placeholder: (context, url) => Center(
+                                                    //   child: CircularProgressIndicator(
+                                                    //     color: Colors.white54,
+                                                    //   ),
+                                                    // ),
+                                                    errorWidget:
+                                                        (context, url, error) =>
+                                                            CircleAvatar(
+                                                      radius: 82,
+                                                      backgroundImage:
+                                                          AssetImage(
+                                                              'assets/img.png'),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            )),
+                                        Text(
+                                          'dear ${SignCubit.get(context).user?.user?.name ?? ''} based on Your BMI ${SignCubit.get(context).BMI} & BMR ${SignCubit.get(context).user?.user?.bmr?.round() ?? ''} you need to visit doctor so i recommend list of them ',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 32,
                                           ),
                                         ),
-                                      ),
-                                      // placeholder: (context, url) => Center(
-                                      //   child: CircularProgressIndicator(
-                                      //     color: Colors.white54,
-                                      //   ),
-                                      // ),
-                                      errorWidget: (context, url, error) =>
-                                          CircleAvatar(
-                                        radius: 22,
-                                        backgroundImage:
-                                            AssetImage('assets/img.png'),
-                                      ),
-                                    );
-                                  },
-                                ))),
-                        cubit.Screens[cubit.currentScreen],
-                      ],
-                    ),
+                                        Spacer(),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              SignCubit.get(context).BMI = null;
+                                              SignCubit.get(context).zero();
+                                              HomeCubit.get(context)
+                                                  .ChangeNavBarScreen(index: 3);
+                                            },
+                                            child: Text('doctors Section')),
+                                      ],
+                                    ),
+                                  )),
+                            );
+                          },
+                        ),
+                    ],
                   ),
                 ),
-                floatingActionButton: cubit.currentScreen == 1
-                    ? FloatingActionButton(
-                        heroTag: Text("todoFAT"),
-                        onPressed: () {
-                          NavigatPushTo(context: context, widget: AddTask());
-                        },
-                        child: Icon(
-                          Icons.add,
-                          color: DARK,
-                        ),
-                        backgroundColor: WHITE,
-                      )
-                    : null,
+                // floatingActionButton: cubit.currentScreen == 1
+                //     ? FloatingActionButton(
+                //         heroTag: Text("todoFAT"),
+                //         onPressed: () {
+                //           NavigatPushTo(context: context, widget: AddTask());
+                //         },
+                //         child: Icon(
+                //           Icons.add,
+                //           color: DARK,
+                //         ),
+                //         backgroundColor: WHITE,
+                //       )
+                //     : null,
                 bottomNavigationBar: BottomNavigationBar(
                   onTap: (index) {
                     print(index);

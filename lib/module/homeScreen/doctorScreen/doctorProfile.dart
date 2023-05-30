@@ -5,7 +5,7 @@ import '../../../model/auth_model/doctors.dart';
 import '../../../shared/componant/componant.dart';
 
 class DoctorProfile extends StatelessWidget {
-  final DoctorModel? item;
+  final AllDoctors? item;
   DoctorProfile({Key? key, required this.item}) : super(key: key);
 
   @override
@@ -60,7 +60,7 @@ class DoctorProfile extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    "${item?.name}",
+                                    "${item?.doctor}",
                                     style: TextStyle(
                                       color: DARK.withOpacity(.4),
                                       fontWeight: FontWeight.bold,
@@ -96,7 +96,7 @@ class DoctorProfile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Performing hot reload...Syncing files to device AOSP on IA Emulator...Reloaded 1 of 638 libraries in 10,569ms (compile: 109 ms, reload: 1902 ms, reassemble: 7179 ms).",
+                      '${item?.description}',
                       style: TextStyle(
                         color: DARK.withOpacity(.4),
                         fontWeight: FontWeight.bold,
@@ -112,56 +112,69 @@ class DoctorProfile extends StatelessWidget {
               CastumCard(
                   child: Container(
                     width: double.infinity,
-                    child: Text(
-                      "Clinic Appointments",
-                      style: TextStyle(
-                        color: DARKINDED,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Brief",
+                          style: TextStyle(
+                            color: DARKINDED,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                        Text(
+                          "${item?.brief}",
+                          style: TextStyle(
+                            color: DARKINDED,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   color: WHITE),
-              Row(
-                children: [
-                  Expanded(
-                    child: CastumCard(
-                        child: Column(
-                          children: [
-                            Text(
-                              "open",
-                              style: TextStyle(
-                                  color: DARKINDED,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22),
-                            ),
-                            Text(
-                              " from \n 8  to 10 ",
-                              style: TextStyle(
-                                color: DARKINDED,
-                              ),
-                            ),
-                          ],
-                        ),
-                        color: WHITE),
-                  ),
-                  Expanded(
-                    child: CastumCard(
-                        child: Column(
-                          children: [
-                            Text(
-                              "open from  \n 12 to 6",
-                              style: TextStyle(
-                                color: DARKINDED,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        color: WHITE),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: CastumCard(
+              //           child: Column(
+              //             children: [
+              //               Text(
+              //                 "open",
+              //                 style: TextStyle(
+              //                     color: DARKINDED,
+              //                     fontWeight: FontWeight.bold,
+              //                     fontSize: 22),
+              //               ),
+              //               Text(
+              //                 " from \n 8  to 10 ",
+              //                 style: TextStyle(
+              //                   color: DARKINDED,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //           color: WHITE),
+              //     ),
+              //     // Expanded(
+              //     //   child: CastumCard(
+              //     //       child: Column(
+              //     //         children: [
+              //     //           Text(
+              //     //             "open from  \n 12 to 6",
+              //     //             style: TextStyle(
+              //     //               color: DARKINDED,
+              //     //               fontWeight: FontWeight.bold,
+              //     //             ),
+              //     //           ),
+              //     //         ],
+              //     //       ),
+              //     //       color: WHITE),
+              //     // ),
+              //   ],
+              // ),
               CastumCard(
                 child: Container(
                   child: Column(
@@ -177,7 +190,7 @@ class DoctorProfile extends StatelessWidget {
                             width: 8,
                           ),
                           Text(
-                            "${item?.fee}",
+                            "${item?.price}",
                             style: TextStyle(
                               color: DARK.withOpacity(.4),
                               fontWeight: FontWeight.bold,
@@ -196,7 +209,7 @@ class DoctorProfile extends StatelessWidget {
                           ),
                           Flexible(
                             child: Text(
-                              "${item?.address}",
+                              "${item?.area}${item?.address}",
                               maxLines: 3,
                               softWrap: true,
                               style: TextStyle(
@@ -217,7 +230,7 @@ class DoctorProfile extends StatelessWidget {
                             color: DARKINDED,
                           ),
                           Text(
-                            "${item?.phone}",
+                            "${item?.phoneNumber}",
                             style: TextStyle(
                               color: DARK.withOpacity(.4),
                               fontWeight: FontWeight.bold,
@@ -228,6 +241,16 @@ class DoctorProfile extends StatelessWidget {
                       SizedBox(
                         height: 8,
                       ),
+                      // InkWell(
+                      //   onTap: () async => await launchUrl(
+                      //       Uri.parse('https://www.google.com')),
+                      //   child: Text(
+                      //     'Click here',
+                      //     style: TextStyle(
+                      //         decoration: TextDecoration.underline,
+                      //         color: Colors.blue),
+                      //   ),
+                      // )
                     ],
                   ),
                 ),

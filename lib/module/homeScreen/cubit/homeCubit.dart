@@ -31,18 +31,19 @@ class HomeCubit extends Cubit<HomeState> {
     if (index == 3) {
       getAllDoctor();
     }
-    if (index == 1) {
-      getTodoTAsks();
+    if (index == 1 && exrModel == null) {
+      getExerciseall();
     }
     if (index == 2 && exrModel == null) {
       print("gettt exr");
       // getExerciseLevel();
+
       getExerciseall();
     }
   }
 
   ///get Doctor
-  List<DoctorModel> doctors = [];
+  List<AllDoctors> doctors = [];
   getAllDoctor() {
     print(AppConstant.Token);
     emit(GetDoctorsLoading());
@@ -52,7 +53,7 @@ class HomeCubit extends Cubit<HomeState> {
     ).then((value) {
       doctors = [];
       value.forEach((element) {
-        doctors.add(DoctorModel.fromJson(element));
+        doctors.add(AllDoctors.fromJson(element));
       });
       print(value);
       print(doctors.length);
@@ -62,7 +63,7 @@ class HomeCubit extends Cubit<HomeState> {
     });
   }
 
-  DoctorModel? doctorProfile;
+  AllDoctors? doctorProfile;
   getSpacificDoctor() {
     emit(GetDoctorProfileLoading());
     getData(
@@ -78,14 +79,13 @@ class HomeCubit extends Cubit<HomeState> {
 
 //exr
   EXRModel? exrModel;
-  getExerciseLevel() async {
-    exrModel = null;
-    emit(GetEXRLoading());
+  getExerciseLevel({required String lvl}) async {
+    if (exrModel == null) emit(GetEXRLoading());
     await postData(
         pathUrl: AppApi.exerciseLevel,
         token: AppConstant.Token,
         body: {
-          'level': '3',
+          'level': '${lvl}',
         }).then((value) {
       print(value);
       if (value['status']) {
@@ -102,7 +102,6 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   getExerciseall() async {
-    exrModel = null;
     emit(GetEXRLoading());
     await getData(
       pathUrl: AppApi.allexercises,

@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:life_partner/module/exr_model/exr_screen.dart';
 import 'package:life_partner/module/homeScreen/cubit/homeCubit.dart';
 import 'package:life_partner/module/homeScreen/cubit/state.dart';
 import 'package:life_partner/shared/componant/componant.dart';
@@ -54,28 +55,32 @@ class ToDo extends StatelessWidget {
             // TODO: implement listener
           }, builder: (context, state) {
             return ConditionalBuilder(
-              condition: !(state is loadingTodoState) &&
-                  HomeCubit.get(context).todo?.status == true,
+              condition: !(state is GetEXRLoading) &&
+                  HomeCubit.get(context).exrModel?.status == true,
               builder: (BuildContext context) => ListView.builder(
-                itemCount:
-                    (HomeCubit.get(context).todo?.exercise?.length ?? 0 + 3),
+                itemCount: (HomeCubit.get(context).exrModel?.exercise.length),
                 itemBuilder: (
                   BuildContext context,
                   int index,
                 ) =>
-                    todoTask(
-                        task: (index + 1) %
-                                    (HomeCubit.get(context)
-                                            .todo
-                                            ?.exercise
-                                            ?.length ??
-                                        0 + 2) ==
-                                0
-                            ? '${HomeCubit.get(context).todo?.diet[index % 3].title} ${index % 3}'
-                            : '${HomeCubit.get(context).todo?.exercise[index].title}'),
+                    InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => ExrScreen(
+                                  item: HomeCubit.get(context)
+                                      .exrModel
+                                      ?.exercise[index],
+                                )));
+                  },
+                  child: todoTask(
+                      task:
+                          '${HomeCubit.get(context).exrModel?.exercise[index].title}'),
+                ),
               ),
-              fallback: (BuildContext context) => state is loadingTodoState ||
-                      HomeCubit.get(context).todo == null
+              fallback: (BuildContext context) => state is GetEXRLoading ||
+                      HomeCubit.get(context).exrModel == null
                   ? Container(
                       height: MediaQuery.of(context).size.height * 2 / 5,
                       alignment: Alignment.center,

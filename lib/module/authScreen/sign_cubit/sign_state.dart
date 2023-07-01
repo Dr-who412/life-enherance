@@ -61,3 +61,15 @@ class getMealLoadingDiet extends SignState {}
 class getMealDietSuccess extends SignState {}
 
 class getMealDietError extends SignState {}
+
+class getDisoredrLodaing extends SignState {}
+
+class getDisoredrSuccess extends SignState {}
+
+class getDisoredrError extends SignState {}
+
+class sendDisorderLoading extends SignState {}
+
+class sendDisorderSucccess extends SignState {}
+
+class sendDisorderError extends SignState {}

@@ -14,4 +14,6 @@ class AppApi {
   static String select_diet = 'diet/select_diet';
   static String weeklyDiet = 'diet/weekdiet';
   static String dietweekid = 'diet/weekid';
+  static String disorder = 'questionnaire/questions';
+  static String resultDisorder = 'questionnaire/result';
 }

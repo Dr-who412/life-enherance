@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:life_partner/model/auth_model/google_model.dart';
 import 'package:life_partner/model/meal.dart';
+import 'package:life_partner/model/question_model.dart';
 import 'package:life_partner/model/weakly_diet.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/sign_state.dart';
 import 'package:life_partner/shared/componant/constant.dart';
@@ -430,6 +431,58 @@ class SignCubit extends Cubit<SignState> {
   }
 
   int? choosedMeals;
+
+  DisorderQuestion? disorderModel;
+  getQuestions() async {
+    emit(getDisoredrLodaing());
+    await getData(
+      pathUrl: AppApi.disorder,
+      token: AppConstant.Token,
+    ).then((value) {
+      print(value);
+      if (value['status']) {
+        emit(getDisoredrSuccess());
+        disorderModel = DisorderQuestion.fromJson(value);
+      } else {
+        emit(getDisoredrError());
+      }
+    }).catchError((error) {
+      print(error);
+      emit(getDisoredrError());
+    });
+  }
+
+  List disorderAns = [];
+  int totalDisorder = 0;
+  setDisorderAns(int index, int value) {
+    print(disorderAns);
+    totalDisorder = 0;
+    disorderAns[index] = value;
+    print(disorderAns);
+    disorderAns.forEach((element) {
+      totalDisorder = totalDisorder + int.parse('$element');
+    });
+    print('${totalDisorder}');
+  }
+
+  postDisorderResult() async {
+    emit(sendDisorderLoading());
+
+    await postData(
+            pathUrl: AppApi.resultDisorder,
+            body: {
+              'result':
+                  '${totalDisorder / (3 * (disorderModel?.questions?.length.toInt() ?? 1))}'
+            },
+            token: AppConstant.Token)
+        .then((value) {
+      print('$value');
+      emit(sendDisorderSucccess());
+    }).catchError((error) {
+      emit(sendDisorderError());
+      print(error);
+    });
+  }
 }
 
 enum days { sunday, monday, tuesday, wednesday, thursday, friday, saturday }

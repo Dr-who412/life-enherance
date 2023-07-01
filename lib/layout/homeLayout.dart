@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
+import 'package:life_partner/module/eating_disorder/guide.dart';
 import 'package:life_partner/module/homeScreen/cubit/homeCubit.dart';
 import 'package:life_partner/module/homeScreen/cubit/state.dart';
 import 'package:life_partner/shared/componant/componant.dart';
@@ -155,6 +156,27 @@ class _HomeLayoutState extends State<HomeLayout> {
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: 40,
+                          ),
+
+                          ListTile(
+                            title: Text(
+                              'guide',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onTap: () {
+                              SignCubit.get(context).getGuide();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => GuideScrean()),
+                              );
+                            },
+                          ),
+
                           Spacer(),
                           // ListTile(
                           //   title: Text('Item 1'),

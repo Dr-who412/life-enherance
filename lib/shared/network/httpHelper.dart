@@ -40,10 +40,13 @@ Future getData(
     {required String pathUrl, Map<String, dynamic>? query, token}) async {
   var client = http.Client();
   var url = Uri.parse('${AppApi.BaseUrl}$pathUrl');
-  var res = await client.get(url, headers: {
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer $token'
-  });
+  var res = await client.get(
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    },
+  );
   print(res.body.toString());
   if (res.statusCode == 200) {
     print(await res.body.toString());

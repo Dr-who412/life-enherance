@@ -10,7 +10,6 @@ import 'disorder.dart';
 
 class Disorder extends StatelessWidget {
   const Disorder({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     SignCubit.get(context).disorderAns = [];

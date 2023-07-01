@@ -1,14 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:life_partner/layout/homeLayout.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
 import 'package:life_partner/module/homeScreen/cubit/homeCubit.dart';
 import 'package:life_partner/shared/componant/constant.dart';
 import 'package:life_partner/shared/shared_preference/cachHelper.dart';
 
 import 'firebase_options.dart';
-import 'module/authScreen/login.dart';
+import 'module/authScreen/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,9 +35,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: (AppConstant.Token != null && AppConstant.Token.isNotEmpty)
-            ? HomeLayout()
-            : Login(),
+        home: Splach(),
         debugShowCheckedModeBanner: false,
       ),
     );

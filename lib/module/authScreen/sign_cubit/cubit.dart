@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:life_partner/model/auth_model/google_model.dart';
+import 'package:life_partner/model/guide_model.dart';
 import 'package:life_partner/model/meal.dart';
 import 'package:life_partner/model/question_model.dart';
 import 'package:life_partner/model/weakly_diet.dart';
@@ -465,6 +466,7 @@ class SignCubit extends Cubit<SignState> {
     print('${totalDisorder}');
   }
 
+  GuideModel? goide;
   postDisorderResult() async {
     emit(sendDisorderLoading());
 
@@ -472,16 +474,40 @@ class SignCubit extends Cubit<SignState> {
             pathUrl: AppApi.resultDisorder,
             body: {
               'result':
-                  '${totalDisorder / (3 * (disorderModel?.questions?.length.toInt() ?? 1))}'
+                  '${totalDisorder / (3 * (disorderModel?.questions?.length.toInt() ?? 1))}',
+              'email': '${user?.user?.email}'
             },
             token: AppConstant.Token)
         .then((value) {
       print('$value');
+      goide = GuideModel.fromJson(value);
       emit(sendDisorderSucccess());
     }).catchError((error) {
       emit(sendDisorderError());
       print(error);
     });
+  }
+
+  getGuide() async {
+    if (goide == null) {
+      emit(sendDisorderLoading());
+
+      await getData(
+        pathUrl: AppApi.guide,
+        query: {'hasDisorder': '1'},
+      ).then((value) {
+        print('$value');
+        if (value['status']) {
+          goide = GuideModel.fromJson(value);
+          emit(sendDisorderSucccess());
+        } else {
+          emit(sendDisorderError());
+        }
+      }).catchError((error) {
+        emit(sendDisorderError());
+        print(error);
+      });
+    }
   }
 }
 

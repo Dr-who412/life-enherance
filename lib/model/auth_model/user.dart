@@ -29,6 +29,7 @@ class User {
   String? photoURL;
   int? age;
   double? bmr;
+  String? hasDisorder;
   String? diet;
   int? dietLevel;
   int? exerciceLevel;
@@ -43,6 +44,7 @@ class User {
       this.password,
       this.name,
       this.iV,
+      this.hasDisorder,
       this.bMI,
       this.photoURL,
       this.age,
@@ -63,6 +65,7 @@ class User {
     iV = json['__v'];
     bMI = json['BMI'];
     photoURL = json['PhotoURL'];
+    hasDisorder = json['hasDisorder'];
     age = json['age'];
     bmr = json['bmr'];
     diet = json['diet'];
@@ -84,6 +87,7 @@ class User {
     data['BMI'] = this.bMI;
     data['PhotoURL'] = this.photoURL;
     data['age'] = this.age;
+    data['hasDisorder'] = this.hasDisorder;
     data['bmr'] = this.bmr;
     data['diet'] = this.diet;
     data['dietLevel'] = this.dietLevel;

@@ -9,10 +9,11 @@ class AllDoctors {
   String? price;
   String? link;
   String? phoneNumber;
-
+  String? image;
   AllDoctors(
       {this.sId,
       this.doctor,
+      this.image,
       this.description,
       this.brief,
       this.area,
@@ -27,6 +28,7 @@ class AllDoctors {
     doctor = json['Doctor'];
     description = json['Description'];
     brief = json['Brief'];
+    image = json['Image'];
     area = json['Area'];
     address = json['Address'];
     rate = json['Rate'];
@@ -42,6 +44,7 @@ class AllDoctors {
     data['Description'] = this.description;
     data['Brief'] = this.brief;
     data['Area'] = this.area;
+    data['Image'] = this.image;
     data['Address'] = this.address;
     data['Rate'] = this.rate;
     data['Price'] = this.price;

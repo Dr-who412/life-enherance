@@ -33,9 +33,19 @@ class DoctorProfile extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: const CircleAvatar(
-                        backgroundImage: AssetImage("assets/img.png"),
-                        radius: 46,
+                      child: Container(
+                        height: 82,
+                        width: 82,
+                        decoration: BoxDecoration(shape: BoxShape.circle),
+                        child: Image.network(
+                          '${item?.image}',
+                          fit: BoxFit.contain,
+                          width: double.infinity,
+                          height: double.infinity,
+                          errorBuilder: (BuildContext, Object, StackTrace) {
+                            return Image.asset("assets/img.png");
+                          },
+                        ),
                       )),
                   Expanded(
                     flex: 2,

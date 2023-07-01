@@ -160,22 +160,24 @@ class _HomeLayoutState extends State<HomeLayout> {
                             height: 40,
                           ),
 
-                          ListTile(
-                            title: Text(
-                              'guide',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                          if (SignCubit.get(context).user?.user?.hasDisorder ==
+                              '1')
+                            ListTile(
+                              title: Text(
+                                'guide',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onTap: () {
+                                SignCubit.get(context).getGuide();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GuideScrean()),
+                                );
+                              },
                             ),
-                            onTap: () {
-                              SignCubit.get(context).getGuide();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => GuideScrean()),
-                              );
-                            },
-                          ),
 
                           Spacer(),
                           // ListTile(

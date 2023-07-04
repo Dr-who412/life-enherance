@@ -246,7 +246,7 @@ class SignCubit extends Cubit<SignState> {
       "PhotoURL": "${profileUrl ?? user?.user?.photoURL}"
     }).then((value) {
       if (value['status'] == true) {
-        user = UserModel.fromJson(value['user']);
+        user?.user = Users.fromJson(value['user']);
         showtoast(text: 'updated Successfully', state: toastStates.SUCESS);
         emit(UpdateUSerSuccessState());
       }
@@ -469,7 +469,10 @@ class SignCubit extends Cubit<SignState> {
   GuideModel? goide;
   postDisorderResult() async {
     emit(sendDisorderLoading());
-
+    print('result' +
+        '${totalDisorder / (3 * (disorderModel?.questions?.length.toInt() ?? 1))}' +
+        'email' +
+        '${user?.user?.email}');
     await postData(
             pathUrl: AppApi.resultDisorder,
             body: {
@@ -480,8 +483,12 @@ class SignCubit extends Cubit<SignState> {
             token: AppConstant.Token)
         .then((value) {
       print('$value');
-      goide = GuideModel.fromJson(value);
-      emit(sendDisorderSucccess());
+      if (value['status']) {
+        goide = GuideModel.fromJson(value);
+        emit(sendDisorderSucccess());
+      } else {
+        emit(sendDisorderError());
+      }
     }).catchError((error) {
       emit(sendDisorderError());
       print(error);
@@ -491,10 +498,9 @@ class SignCubit extends Cubit<SignState> {
   getGuide() async {
     if (goide == null) {
       emit(sendDisorderLoading());
-
       await getData(
         pathUrl: AppApi.guide,
-        query: {'hasDisorder': '1'},
+        // query: {'hasDisorder': '1'},
       ).then((value) {
         print('$value');
         if (value['status']) {

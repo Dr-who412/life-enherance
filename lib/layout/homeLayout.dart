@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:life_partner/module/authScreen/sign_cubit/cubit.dart';
+import 'package:life_partner/module/bmiScreen/bmiUpdate.dart';
 import 'package:life_partner/module/eating_disorder/guide.dart';
 import 'package:life_partner/module/homeScreen/cubit/homeCubit.dart';
 import 'package:life_partner/module/homeScreen/cubit/state.dart';
@@ -24,7 +25,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration.zero, () => SignCubit.get(context).getUserData());
+    SignCubit.get(context).getUserData();
   }
 
   @override
@@ -77,6 +78,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                     ),
                     child: Container(
                       padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.symmetric(horizontal: 26),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -90,7 +92,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                               color: Colors.transparent,
                             ),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 InkWell(
                                     onTap: () {
@@ -109,8 +111,8 @@ class _HomeLayoutState extends State<HomeLayout> {
                                           imageBuilder:
                                               (context, imageProvider) =>
                                                   Container(
-                                            width: 68,
-                                            height: 68,
+                                            width: 75,
+                                            height: 75,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
@@ -121,8 +123,8 @@ class _HomeLayoutState extends State<HomeLayout> {
                                           ),
                                           placeholder: (context, url) =>
                                               SizedBox(
-                                            width: 68,
-                                            height: 68,
+                                            width: 75,
+                                            height: 75,
                                             child: Center(
                                               child: CircularProgressIndicator(
                                                 color: Colors.white54,
@@ -131,7 +133,7 @@ class _HomeLayoutState extends State<HomeLayout> {
                                           ),
                                           errorWidget: (context, url, error) =>
                                               CircleAvatar(
-                                            radius: 22,
+                                            radius: 42,
                                             backgroundImage:
                                                 AssetImage('assets/img.png'),
                                           ),
@@ -159,25 +161,78 @@ class _HomeLayoutState extends State<HomeLayout> {
                           SizedBox(
                             height: 40,
                           ),
-
-                          if (SignCubit.get(context).user?.user?.hasDisorder ==
-                              '1')
-                            ListTile(
-                              title: Text(
-                                'guide',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              onTap: () {
-                                SignCubit.get(context).getGuide();
-                                Navigator.push(
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => GuideScrean()),
-                                );
-                              },
+                                      builder: (BuildContext context) =>
+                                          BmiUpdate()));
+                            },
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  "assets/bmi.png",
+                                  height: 22,
+                                  width: 22,
+                                ),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'BMI',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24),
+                                )
+                              ],
                             ),
+                          ),
+                          SizedBox(
+                            height: 22,
+                          ),
+                          BlocConsumer<SignCubit, SignState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              return SignCubit.get(context)
+                                          .user
+                                          ?.user
+                                          ?.hasDisorder
+                                          .toString() ==
+                                      '1'
+                                  ? GestureDetector(
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.info_outline_rounded,
+                                              color: Colors.white),
+                                          SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            'guide',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        SignCubit.get(context).getGuide();
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GuideScrean()),
+                                        );
+                                      },
+                                    )
+                                  : SizedBox();
+                            },
+                          ),
 
                           Spacer(),
                           // ListTile(
@@ -187,12 +242,20 @@ class _HomeLayoutState extends State<HomeLayout> {
                           //     // ...
                           //   },
                           // ),
-                          ListTile(
-                            title: Text(
-                              'Logout',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                          GestureDetector(
+                            child: Row(
+                              children: [
+                                Icon(Icons.logout, color: Colors.white),
+                                SizedBox(
+                                  width: 12,
+                                ),
+                                Text(
+                                  'Logout',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                             onTap: () {
                               SignCubit.get(context).logOut();
@@ -217,21 +280,21 @@ class _HomeLayoutState extends State<HomeLayout> {
                                 alignment: Alignment.topLeft,
                                 child: BlocListener<SignCubit, SignState>(
                                   listener: (context, state) {
-                                    if (state is GetUserDataSucces &&
-                                        SignCubit.get(context).showDrower ==
-                                            true) {
+                                    if (SignCubit.get(context).showDrower ==
+                                        true) {
                                       SignCubit.get(context).showDrower = false;
                                       _scaffoldKey.currentState!.openDrawer();
                                     }
-
                                     // TODO: implement listener}
                                   },
                                   child: InkWell(
                                       onTap: () {
                                         // SignCubit.get(context).logOut();
-                                        SignCubit.get(context).getUserData();
+                                        //   SignCubit.get(context).getUserData();
                                         SignCubit.get(context).showDrower =
                                             true;
+                                        // SignCubit.get(context).showDrower = false;
+                                        _scaffoldKey.currentState!.openDrawer();
                                         print("object");
                                       },
                                       child: BlocConsumer<SignCubit, SignState>(
@@ -392,6 +455,9 @@ class _HomeLayoutState extends State<HomeLayout> {
                   onTap: (index) {
                     print(index);
                     cubit.ChangeNavBarScreen(index: index);
+                    if (index == 0) {
+                      SignCubit.get(context).getUserData();
+                    }
                     print(cubit.currentScreen);
                   },
                   currentIndex: cubit.currentScreen,

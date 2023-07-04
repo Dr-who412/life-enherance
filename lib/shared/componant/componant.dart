@@ -233,7 +233,31 @@ Widget DoctorCard({required BuildContext context, required AllDoctors? item}) =>
                 SizedBox(
                   width: 12,
                 ),
-                CircleAvatar(backgroundImage: AssetImage("assets/img.png")),
+                Card(
+                  elevation: 0,
+                  clipBehavior: Clip.hardEdge,
+                  shadowColor: DARK,
+                  color: Colors.white.withOpacity(.4),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.all(4),
+                    height: 82,
+                    width: 82,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    child: Image.network(
+                      '${item?.image}',
+                      fit: BoxFit.contain,
+                      width: double.infinity,
+                      height: double.infinity,
+                      errorBuilder: (BuildContext, Object, StackTrace) {
+                        return Image.asset("assets/img.png");
+                      },
+                    ),
+                  ),
+                ),
                 SizedBox(
                   width: 12,
                 ),

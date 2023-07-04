@@ -1,12 +1,12 @@
 class UserModel {
   bool? status;
-  User? user;
+  Users? user;
 
   UserModel({this.status, this.user});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? new Users.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -19,7 +19,7 @@ class UserModel {
   }
 }
 
-class User {
+class Users {
   String? sId;
   String? email;
   String? password;
@@ -38,7 +38,7 @@ class User {
   int? weight;
   String? dietPlan;
 
-  User(
+  Users(
       {this.sId,
       this.email,
       this.password,
@@ -57,7 +57,7 @@ class User {
       this.weight,
       this.dietPlan});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Users.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     email = json['email'];
     password = json['password'];

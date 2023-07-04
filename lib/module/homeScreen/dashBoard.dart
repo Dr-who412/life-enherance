@@ -24,6 +24,43 @@ class DashBord extends StatelessWidget {
             child: Column(
               children: [
                 Align(
+                  alignment: Alignment.center,
+                  child: Card(
+                    margin: EdgeInsets.all(24),
+                    color: WHITE.withOpacity(.4),
+                    elevation: 12,
+
+                    // margin: EdgeInsets.only(bottom: 58, left: 8, top: 8),
+                    shadowColor: HexColor("#198787").withOpacity(.7),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            "assets/bmi.png",
+                            height: 22,
+                            width: 22,
+                          ),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Text(
+                            '${SignCubit.get(context).user?.user?.bMI}',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Goals",

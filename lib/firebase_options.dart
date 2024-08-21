@@ -69,7 +69,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1042200251962',
     projectId: 'lifeenhancer',
     storageBucket: 'lifeenhancer.appspot.com',
+    androidClientId: '1042200251962-pbekp4112ugsi297a9kj5qsv2ufppedj.apps.googleusercontent.com',
     iosClientId: '1042200251962-b1dakgqlooqugul5e7tq5i6coq0hcvpq.apps.googleusercontent.com',
     iosBundleId: 'com.example.lifePartner',
   );
+
 }

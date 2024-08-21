@@ -198,7 +198,7 @@ class SignCubit extends Cubit<SignState> {
   //   emit(RenmovePickedChatImage());
   // }
   Future<void> pickImage() async {
-    final pickFile = await picker.getImage(source: ImageSource.gallery);
+    final pickFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickFile != null) {
       profileImage = File(pickFile.path);
       print(pickFile.path);

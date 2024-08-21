@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.life_partner">
     <uses-permission android:name="android.permission.INTERNET"/>
+
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
@@ -15,6 +16,9 @@
        <activity android:name="io.flutter.plugins.urllauncher.WebViewActivity"
            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
            android:exported="false"/>
+       <meta-data
+           android:name="com.google.android.gms.version"
+           android:value="@integer/google_play_services_version"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -1,5 +1,5 @@
 class AppApi {
-  static String BaseUrl = 'https://dull-gold-kitten-hat.cyclic.app/';
+  static String BaseUrl = 'http://life-enhancer.api.com.f0cabab0aa13325895.temporary.link/';
   static String Login = 'user/login';
   static String Signup = 'user/signup';
   static String gmailAuth = 'user/gmailAuth';

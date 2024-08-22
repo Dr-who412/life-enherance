@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:life_partner/cardsScrol/src/constants.dart';
-import 'package:life_partner/cardsScrol/src/models/swiper_card.dart';
-import 'package:life_partner/cardsScrol/src/widgets/cool_swiper_card.dart';
-import 'package:life_partner/cardsScrol/src/widgets/cool_swiper_card_wrapper.dart';
+
+// import '../../model/card_generator.dart';
+// import '../../utils/constants.dart';
+import '../constants.dart';
+import '../models/swiper_card.dart';
+import 'cool_swiper_card.dart';
+import 'cool_swiper_card_wrapper.dart';
 
 class CoolSwiper extends StatefulWidget {
   final List<Widget> children;
@@ -10,11 +13,11 @@ class CoolSwiper extends StatefulWidget {
   final double cardHeight;
 
   const CoolSwiper({
-    Key? key,
+    super.key,
     required this.children,
     this.initAnimationOffset = Constants.initAnimationOffset,
     this.cardHeight = Constants.cardHeight,
-  }) : super(key: key);
+  });
 
   @override
   State<CoolSwiper> createState() => _CoolSwiperState();
